@@ -125,7 +125,7 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
             src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-gRxKEWIH261PwsWA62vZ027l54RJEl.png"
             alt="Buzz Filing"
             crossOrigin="anonymous"
-            style={{ height: "184px", width: "auto", objectFit: "contain", display: "inline-block" }}
+            style={{ height: "100px", width: "auto", objectFit: "contain", display: "inline-block" }}
           />
         </div>
 
