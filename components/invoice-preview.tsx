@@ -155,7 +155,7 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
 
       {/* ── TITLE ─────────────────────────────────────────────────────────── */}
       <div style={{ padding: `22px ${PAD}px 14px` }}>
-        <span style={{ fontSize: "28px", fontWeight: "900", fontStyle: "italic", color: C.red,   lineHeight: 1 }}>Hi!</span>
+        <span style={{ fontSize: "28px", fontWeight: "900", color: C.red, lineHeight: 1 }}>Hi!</span>
         <span style={{ fontSize: "28px", fontWeight: "900",                       color: C.black, lineHeight: 1 }}>{" "}This is Your Invoice.</span>
       </div>
 
