@@ -1,10 +1,13 @@
 import type { Metadata } from 'next'
-import { Unbounded, Inter } from 'next/font/google'
+import { Unbounded } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
-const _unbounded = Unbounded({ subsets: ["latin"], variable: "--font-heading" });
-const _inter = Inter({ subsets: ["latin"] });
+const _unbounded = Unbounded({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: 'Buzz Filing — Invoice Generator',
@@ -36,7 +39,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`font-sans antialiased ${_unbounded.variable}`}>
+      <body className={`font-sans antialiased ${_unbounded.variable}`} style={{ fontFamily: "var(--font-sans, sans-serif)" }}>
         {children}
         <Analytics />
       </body>

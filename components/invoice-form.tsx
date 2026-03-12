@@ -76,10 +76,7 @@ export default function InvoiceForm({
     <div className="flex flex-col gap-6 p-6 h-full overflow-y-auto">
       {/* Header */}
       <div className="pb-2 border-b border-border">
-        <h2
-          className="text-base font-semibold text-foreground tracking-tight"
-          style={{ fontFamily: "var(--font-heading, sans-serif)" }}
-        >
+        <h2 className="text-base font-semibold text-foreground tracking-tight">
           Invoice Details
         </h2>
         <p className="text-xs text-muted-foreground mt-1">

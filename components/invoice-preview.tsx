@@ -34,7 +34,7 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
         ref={ref}
         id="invoice-preview"
         style={{
-          fontFamily: "Arial, Helvetica, sans-serif",
+          fontFamily: "'Unbounded', 'Arial', sans-serif",
           background: "#fff",
           color: "#111",
           width: "100%",
@@ -67,10 +67,10 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
                 fontSize: "26px",
                 fontWeight: "900",
                 letterSpacing: "2px",
-                fontFamily: "Arial Black, Arial, sans-serif",
-              }}
-            >
-              BUZZ FILING
+              fontFamily: "'Unbounded', 'Arial Black', sans-serif",
+            }}
+          >
+            BUZZ FILING
             </div>
             <div style={{ color: "#ccc", fontSize: "10px", marginTop: "4px" }}>
               {COMPANY_INFO.address}
@@ -103,7 +103,7 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
               color: "#cc1f1f",
               fontWeight: "900",
               fontSize: "18px",
-              fontFamily: "Arial Black, Arial, sans-serif",
+              fontFamily: "'Unbounded', 'Arial Black', sans-serif",
               letterSpacing: "0.5px",
             }}
           >
@@ -441,8 +441,8 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
                 color: "#fff",
                 fontWeight: "900",
                 fontSize: "13px",
-                fontFamily: "Arial Black, Arial, sans-serif",
-                letterSpacing: "0.5px",
+              fontFamily: "'Unbounded', 'Arial Black', sans-serif",
+              letterSpacing: "0.5px",
               }}
             >
               Thank you for your business!
