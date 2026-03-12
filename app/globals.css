@@ -130,7 +130,7 @@
 @layer components {
   /* Shared input / select / textarea style for the invoice form */
   .field-input {
-    @apply border-border bg-card text-foreground placeholder:text-muted-foreground/50 rounded-md text-sm transition-colors;
+    @apply border border-border bg-card text-foreground placeholder:text-muted-foreground/50 rounded-full text-sm transition-colors px-4;
     @apply focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:border-primary focus-visible:outline-none;
   }
 }

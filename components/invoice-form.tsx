@@ -222,7 +222,7 @@ export default function InvoiceForm({
               <Button
                 variant="ghost"
                 size="icon"
-                className="h-8 w-8 text-muted-foreground hover:text-destructive"
+                className="h-8 w-8 text-muted-foreground hover:text-destructive cursor-pointer"
                 onClick={() => removeLineItem(item.id)}
                 disabled={data.lineItems.length === 1}
                 aria-label="Remove line item"
@@ -235,7 +235,7 @@ export default function InvoiceForm({
         <Button
           variant="outline"
           size="sm"
-          className="w-full mt-1 gap-2"
+          className="w-full mt-1 gap-2 rounded-full cursor-pointer"
           onClick={addLineItem}
         >
           <PlusCircle className="h-4 w-4" />
@@ -251,7 +251,7 @@ export default function InvoiceForm({
         <div className="grid grid-cols-2 gap-3">
           <div className="flex flex-col gap-1.5">
             <Label>Sub Total (auto)</Label>
-            <div className="h-9 flex items-center px-3 rounded-md border border-border bg-muted text-sm font-semibold text-foreground">
+            <div className="h-9 flex items-center px-4 rounded-full border border-border bg-muted text-sm font-semibold text-foreground">
               ${subTotal.toFixed(2)}
             </div>
           </div>
@@ -285,7 +285,7 @@ export default function InvoiceForm({
           </div>
           <div className="flex flex-col gap-1.5">
             <Label>Balance (auto)</Label>
-            <div className="h-9 flex items-center px-3 rounded-md border-2 border-primary bg-primary/10 text-sm font-bold text-primary">
+            <div className="h-9 flex items-center px-4 rounded-full border-2 border-primary bg-primary/10 text-sm font-bold text-primary">
               ${balance.toFixed(2)}
             </div>
           </div>
@@ -309,12 +309,12 @@ export default function InvoiceForm({
       {/* Actions */}
       <div className="flex flex-col gap-2 pt-2 border-t border-border">
         <Button
-          className="w-full bg-primary text-primary-foreground hover:bg-primary/90 font-bold"
+          className="w-full bg-primary text-primary-foreground hover:bg-primary/90 font-bold rounded-full cursor-pointer"
           onClick={onDownload}
         >
           Download PDF
         </Button>
-        <Button variant="outline" className="w-full" onClick={onReset}>
+        <Button variant="outline" className="w-full rounded-full cursor-pointer" onClick={onReset}>
           Reset Form
         </Button>
       </div>
