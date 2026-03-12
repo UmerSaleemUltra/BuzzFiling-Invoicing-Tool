@@ -77,7 +77,7 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
       })
     : "";
 
-  const statusBg = statusColorMap[data.paymentStatus] ?? C.red;
+  const statusBg = statusColorMap[data.paymentStatus] ?? GRADIENT;
 
   const metaRows: [string, string, boolean][] = [
     ["INVOICE NUMBER", String(data.invoiceNumber), false],
@@ -157,7 +157,7 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
 
       {/* ── TITLE ─────────────────────────────────────────────────────────── */}
       <div style={{ padding: `22px ${PAD}px 14px` }}>
-        <span style={{ fontSize: "28px", fontWeight: "900", color: C.red, lineHeight: 1 }}>Hi!</span>
+        <span style={{ fontSize: "28px", fontWeight: "900", lineHeight: 1, background: GRADIENT, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Hi!</span>
         <span style={{ fontSize: "28px", fontWeight: "900",                       color: C.black, lineHeight: 1 }}>{" "}This is Your Invoice.</span>
       </div>
 
@@ -357,7 +357,7 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
       {/* ── THANK YOU ─────────────────────────────────────────────────────── */}
       <div style={{ padding: `32px ${PAD}px 28px`, textAlign: "center" }}>
         <span style={{ fontSize: "18px", fontWeight: "900", color: C.black }}>Thank you for your </span>
-        <span style={{ fontSize: "18px", fontWeight: "900", color: C.red   }}>business!</span>
+        <span style={{ fontSize: "18px", fontWeight: "900", background: GRADIENT, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>business!</span>
       </div>
 
       {/* ── PAYMENT TERMS ─────────────────────────────────────────────────── */}
@@ -393,7 +393,7 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
         marginTop: "8px",
       }}>
         <span style={{ fontSize: "8px", color: C.grayText, letterSpacing: "0.2px" }}>E. &amp; O. E</span>
-        <span style={{ fontSize: "8px", color: C.red, fontWeight: "500" }}>NOTE : Please email us the payment receipt.</span>
+        <span style={{ fontSize: "8px", fontWeight: "500", background: GRADIENT, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>NOTE : Please email us the payment receipt.</span>
       </div>
 
     </div>
