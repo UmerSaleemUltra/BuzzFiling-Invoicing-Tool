@@ -46,12 +46,10 @@ export default function Home() {
   const [fileName, setFileName] = useState("");
   const previewRef = useRef<HTMLDivElement>(null);
 
-  // Restore saved form data on mount, falling back to defaults
   useEffect(() => {
     const saved = loadFormData();
     const num = getNextInvoiceNumber();
     if (saved) {
-      // Always sync invoice number from dedicated key so it stays consistent
       setInvoiceData({ ...saved, invoiceNumber: num });
     } else {
       setInvoiceData((prev) => ({ ...prev, invoiceNumber: num }));
@@ -59,7 +57,6 @@ export default function Home() {
     setMounted(true);
   }, []);
 
-  // Auto-save form data to localStorage whenever it changes
   useEffect(() => {
     if (mounted) {
       saveFormData(invoiceData);
@@ -79,7 +76,6 @@ export default function Home() {
     const el = document.getElementById("invoice-preview");
     if (!el) return;
 
-    // Dynamically import to avoid SSR issues
     const html2canvas = (await import("html2canvas")).default;
     const { jsPDF } = await import("jspdf");
 
@@ -89,8 +85,6 @@ export default function Home() {
       backgroundColor: "#ffffff",
       logging: false,
       onclone: (clonedDoc) => {
-        // html2canvas cannot parse oklch/lab CSS color functions.
-        // Override all CSS custom properties used in the invoice with plain hex values.
         const root = clonedDoc.documentElement;
         const hexOverrides: Record<string, string> = {
           "--background": "#f7f7f7",
@@ -119,7 +113,6 @@ export default function Home() {
       },
     });
 
-    // A4 in mm: 210 x 297
     const A4_W = 210;
     const A4_H = 297;
 
@@ -130,11 +123,9 @@ export default function Home() {
       format: "a4",
     });
 
-    // Scale image to fit A4 width, preserving aspect ratio
     const canvasRatio = canvas.height / canvas.width;
     const imgH = A4_W * canvasRatio;
 
-    // If content is taller than one A4 page, split across pages
     let yOffset = 0;
     while (yOffset < imgH) {
       if (yOffset > 0) pdf.addPage();
@@ -146,9 +137,8 @@ export default function Home() {
     const resolvedName = fileName.trim() ? fileName.trim().replace(/\.pdf$/i, "") : defaultName;
     pdf.save(`${resolvedName}.pdf`);
 
-    // Save next invoice number AFTER successful download, without resetting the form
     saveInvoiceNumber(invoiceData.invoiceNumber + 1);
-  }, [invoiceData]);
+  }, [invoiceData, fileName]);
 
   const handleReset = useCallback(() => {
     const nextNum = getNextInvoiceNumber();
@@ -165,7 +155,6 @@ export default function Home() {
       ],
     };
     setInvoiceData(fresh);
-    // Clear persisted data so the blank form is saved
     if (typeof window !== "undefined") {
       localStorage.removeItem(FORM_DATA_KEY);
     }
@@ -175,25 +164,31 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      {/* App Bar */}
-      <header className="flex items-center justify-between px-6 py-3 bg-card border-b border-border">
-        <img
-          src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/images-SdNz6vfYoJoMVJMUFtXCjHac5xozpZ.png"
-          alt="Buzz Filing"
-          className="h-9 w-auto object-contain"
-        />
-        <span
-          className="text-xs font-semibold tracking-widest uppercase text-muted-foreground"
-          style={{ fontFamily: "var(--font-heading, sans-serif)" }}
-        >
-          Invoice Generator
-        </span>
+
+      {/* ── Header ── */}
+      <header className="sticky top-0 z-20 bg-card/80 backdrop-blur-md border-b border-border">
+        <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
+          <img
+            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/images-SdNz6vfYoJoMVJMUFtXCjHac5xozpZ.png"
+            alt="Buzz Filing"
+            className="h-8 w-auto object-contain"
+          />
+          <span className="text-[10px] font-semibold tracking-[0.18em] uppercase text-muted-foreground hidden sm:block">
+            Invoice Generator
+          </span>
+          <div className="flex items-center gap-2">
+            <span className="text-[10px] text-muted-foreground bg-muted px-2.5 py-1 rounded-full tabular-nums">
+              #{invoiceData.invoiceNumber}
+            </span>
+          </div>
+        </div>
       </header>
 
-      {/* Main two-panel layout */}
-      <main className="flex flex-1 overflow-hidden flex-col lg:flex-row">
-        {/* Left: Form Panel */}
-        <aside className="w-full lg:w-[400px] xl:w-[440px] flex-shrink-0 border-b lg:border-b-0 lg:border-r border-border bg-card overflow-y-auto max-h-[50vh] lg:max-h-none shadow-sm">
+      {/* ── Body ── */}
+      <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
+
+        {/* Left: Form */}
+        <aside className="w-full lg:w-[400px] xl:w-[420px] flex-shrink-0 bg-card border-b lg:border-b-0 lg:border-r border-border lg:h-[calc(100vh-56px)] lg:sticky lg:top-14 overflow-y-auto">
           <InvoiceForm
             data={invoiceData}
             setData={setInvoiceData}
@@ -204,21 +199,25 @@ export default function Home() {
           />
         </aside>
 
-        {/* Right: Preview Panel */}
-        <section className="flex-1 overflow-y-auto p-6 lg:p-8 bg-muted/30">
+        {/* Right: Preview */}
+        <main className="flex-1 overflow-y-auto bg-muted/40 p-4 sm:p-6 lg:p-8">
           <div className="max-w-4xl mx-auto">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-widest">
+            <div className="flex items-center justify-between mb-5">
+              <p className="text-[10px] font-semibold tracking-[0.16em] uppercase text-muted-foreground">
                 Live Preview
-              </h2>
-              <span className="text-xs text-muted-foreground bg-muted px-2.5 py-1 rounded-full">
-                Invoice #{invoiceData.invoiceNumber}
+              </p>
+              <span className="text-[10px] text-muted-foreground">
+                Updates automatically
               </span>
             </div>
-            <InvoicePreview ref={previewRef} data={invoiceData} />
+            {/* Horizontally scrollable on small screens */}
+            <div className="overflow-x-auto rounded-lg shadow-md">
+              <InvoicePreview ref={previewRef} data={invoiceData} />
+            </div>
           </div>
-        </section>
-      </main>
+        </main>
+
+      </div>
     </div>
   );
 }
