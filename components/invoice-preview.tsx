@@ -7,10 +7,10 @@ interface InvoicePreviewProps {
   data: InvoiceData;
 }
 
-const STATUS_STYLES: Record<string, string> = {
-  Paid: "background:#16a34a;color:#fff",
-  "Partial Paid": "background:#d97706;color:#fff",
-  Unpaid: "background:#cc1f1f;color:#fff",
+const STATUS_COLOR: Record<string, string> = {
+  Paid: "#16a34a",
+  "Partial Paid": "#cc1f1f",
+  Unpaid: "#cc1f1f",
 };
 
 const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
@@ -29,249 +29,172 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
         })
       : "";
 
+    const font = "'Unbounded', 'Arial', sans-serif";
+
     return (
       <div
         ref={ref}
         id="invoice-preview"
         style={{
-          fontFamily: "'Unbounded', 'Arial', sans-serif",
-          background: "#fff",
-          color: "#111",
-          width: "100%",
-          maxWidth: "780px",
+          fontFamily: font,
+          background: "#ffffff",
+          color: "#111111",
+          // A4 at 96dpi: 794px wide, ~1123px tall — we use width + auto height
+          width: "794px",
+          minHeight: "1123px",
           margin: "0 auto",
-          fontSize: "12px",
+          fontSize: "11px",
           lineHeight: "1.5",
-          boxShadow: "0 4px 32px rgba(0,0,0,0.10)",
+          boxShadow: "0 4px 32px rgba(0,0,0,0.12)",
+          display: "flex",
+          flexDirection: "column",
         }}
       >
-        {/* Header stripe */}
-        <div style={{ background: "#cc1f1f", height: "6px", width: "100%" }} />
+        {/* ── LOGO + ADDRESS ── */}
+        <div style={{ padding: "36px 56px 12px", textAlign: "center" }}>
+          {/* Logo */}
+          <div style={{ display: "flex", justifyContent: "center", marginBottom: "10px" }}>
+            <img
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/images-SdNz6vfYoJoMVJMUFtXCjHac5xozpZ.png"
+              alt="Buzz Filing"
+              style={{ height: "64px", width: "auto", objectFit: "contain" }}
+            />
+          </div>
 
-        {/* Top header */}
+          {/* Address line */}
+          <div style={{ fontSize: "9.5px", color: "#444", marginBottom: "3px" }}>
+            {COMPANY_INFO.address}
+          </div>
+          <div style={{ fontSize: "9.5px", color: "#444", marginBottom: "3px" }}>
+            {COMPANY_INFO.website}&nbsp;&nbsp;•&nbsp;&nbsp;{COMPANY_INFO.email}&nbsp;&nbsp;•&nbsp;&nbsp;{COMPANY_INFO.ordersEmail}
+          </div>
+          <div style={{ fontSize: "9.5px", color: "#444" }}>
+            {COMPANY_INFO.phones.join("  •  ")}
+          </div>
+        </div>
+
+        {/* ── SPACER ── */}
+        <div style={{ height: "28px" }} />
+
+        {/* ── HI HEADING ── */}
+        <div style={{ padding: "0 56px 16px" }}>
+          <div style={{ fontSize: "28px", fontWeight: "900", lineHeight: "1.2" }}>
+            <span style={{ color: "#cc1f1f" }}>Hi! </span>
+            <span style={{ color: "#111" }}>This is Your Invoice.</span>
+          </div>
+        </div>
+
+        {/* ── META ROW ── */}
         <div
           style={{
-            background: "#111",
-            padding: "20px 28px 16px",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "flex-start",
-            gap: "16px",
+            padding: "0 56px 20px",
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr 180px",
+            gap: "0",
+            alignItems: "start",
           }}
         >
-          {/* Brand */}
+          {/* BILL TO */}
           <div>
-            <div
-              style={{
-                color: "#cc1f1f",
-                fontSize: "26px",
-                fontWeight: "900",
-                letterSpacing: "2px",
-              fontFamily: "'Unbounded', 'Arial Black', sans-serif",
-            }}
-          >
-            BUZZ FILING
+            <div style={{ fontSize: "8.5px", fontWeight: "700", color: "#111", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "4px" }}>
+              BILL TO
             </div>
-            <div style={{ color: "#ccc", fontSize: "10px", marginTop: "4px" }}>
-              {COMPANY_INFO.address}
+            <div style={{ fontSize: "12px", fontWeight: "700", color: "#111" }}>
+              {data.billTo || "—"}
             </div>
           </div>
 
-          {/* Contact block */}
-          <div style={{ textAlign: "right", color: "#ccc", fontSize: "10px" }}>
-            {COMPANY_INFO.phones.map((p) => (
-              <div key={p}>{p}</div>
-            ))}
-            <div style={{ color: "#cc1f1f", marginTop: "4px" }}>
-              {COMPANY_INFO.website}
-            </div>
-            <div style={{ color: "#cc1f1f" }}>{COMPANY_INFO.email}</div>
-            <div style={{ color: "#cc1f1f" }}>{COMPANY_INFO.ordersEmail}</div>
-          </div>
-        </div>
-
-        {/* "Hi! This is Your Invoice." banner */}
-        <div
-          style={{
-            background: "#f7f7f7",
-            padding: "12px 28px",
-            borderBottom: "2px solid #cc1f1f",
-          }}
-        >
-          <span
-            style={{
-              color: "#cc1f1f",
-              fontWeight: "900",
-              fontSize: "18px",
-              fontFamily: "'Unbounded', 'Arial Black', sans-serif",
-              letterSpacing: "0.5px",
-            }}
-          >
-            Hi!{" "}
-          </span>
-          <span
-            style={{
-              color: "#111",
-              fontWeight: "700",
-              fontSize: "16px",
-            }}
-          >
-            This is Your Invoice.
-          </span>
-        </div>
-
-        {/* Meta grid */}
-        <div style={{ padding: "20px 28px 0" }}>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr 1fr",
-              gap: "0",
-              border: "1px solid #ddd",
-              borderRadius: "4px",
-              overflow: "hidden",
-            }}
-          >
+          {/* Invoice details */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
             {[
-              ["BILL TO", data.billTo || "—"],
               ["INVOICE NUMBER", String(data.invoiceNumber)],
               ["INVOICE DATE", formattedDate || "—"],
-              ["SERVICES TYPE", data.serviceType],
+              ["SERVICES TYPE", data.serviceType || "—"],
               ["INVOICE BY", data.invoiceBy || "—"],
-              [
-                "PAYMENT STATUS",
-                data.paymentStatus,
-                STATUS_STYLES[data.paymentStatus],
-              ],
-            ].map(([label, value, badgeStyle], idx) => (
-              <div
-                key={idx}
-                style={{
-                  padding: "10px 14px",
-                  borderRight: idx % 3 !== 2 ? "1px solid #ddd" : "none",
-                  borderBottom: idx < 3 ? "1px solid #ddd" : "none",
-                  background: idx % 2 === 0 ? "#fff" : "#fafafa",
-                }}
-              >
-                <div
-                  style={{
-                    fontSize: "9px",
-                    fontWeight: "700",
-                    color: "#cc1f1f",
-                    textTransform: "uppercase",
-                    letterSpacing: "0.8px",
-                    marginBottom: "3px",
-                  }}
-                >
+            ].map(([label, value]) => (
+              <div key={label} style={{ display: "flex", gap: "10px", alignItems: "baseline" }}>
+                <span style={{ fontSize: "8.5px", fontWeight: "700", color: "#555", textTransform: "uppercase", letterSpacing: "0.5px", minWidth: "110px" }}>
                   {label}
-                </div>
-                {badgeStyle ? (
-                  <span
-                    style={{
-                      display: "inline-block",
-                      padding: "2px 10px",
-                      borderRadius: "12px",
-                      fontSize: "10px",
-                      fontWeight: "700",
-                      ...(Object.fromEntries(
-                        badgeStyle
-                          .split(";")
-                          .filter(Boolean)
-                          .map((s) => {
-                            const [k, v] = s.split(":");
-                            const key = k
-                              .trim()
-                              .replace(/-([a-z])/g, (_, c) => c.toUpperCase());
-                            return [key, v.trim()];
-                          })
-                      ) as React.CSSProperties),
-                    }}
-                  >
-                    {value}
-                  </span>
-                ) : (
-                  <div
-                    style={{
-                      fontSize: "12px",
-                      fontWeight: "700",
-                      color: "#111",
-                    }}
-                  >
-                    {value}
-                  </div>
-                )}
+                </span>
+                <span style={{ fontSize: "11px", fontWeight: label === "INVOICE BY" ? "700" : "400", color: "#111" }}>
+                  {value}
+                </span>
               </div>
             ))}
           </div>
+
+          {/* Payment Status */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+            <div
+              style={{
+                background: STATUS_COLOR[data.paymentStatus] ?? "#cc1f1f",
+                color: "#fff",
+                textAlign: "center",
+                padding: "8px 10px",
+                fontWeight: "700",
+                fontSize: "10px",
+                letterSpacing: "0.5px",
+              }}
+            >
+              Payment Status
+            </div>
+            <div
+              style={{
+                border: "1px solid #ddd",
+                textAlign: "center",
+                padding: "7px 10px",
+                fontWeight: "600",
+                fontSize: "11px",
+                color: "#111",
+                background: "#fafafa",
+              }}
+            >
+              {data.paymentStatus}
+            </div>
+          </div>
         </div>
 
-        {/* Line Items Table */}
-        <div style={{ padding: "20px 28px 0" }}>
-          <table
-            style={{
-              width: "100%",
-              borderCollapse: "collapse",
-              fontSize: "12px",
-            }}
-          >
+        {/* ── LINE ITEMS TABLE ── */}
+        <div style={{ padding: "0 56px" }}>
+          <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "11px" }}>
             <thead>
-              <tr style={{ background: "#111", color: "#fff" }}>
-                {["DESCRIPTION", "QTY", "RATE", "AMOUNT"].map((h, i) => (
+              <tr style={{ background: "#e8e8e8", color: "#111" }}>
+                {[
+                  { label: "DESCRIPTION", align: "left", width: "auto" },
+                  { label: "QTY", align: "right", width: "60px" },
+                  { label: "RATE", align: "right", width: "80px" },
+                  { label: "AMOUNT", align: "right", width: "90px" },
+                ].map(({ label, align, width }) => (
                   <th
-                    key={h}
+                    key={label}
                     style={{
                       padding: "8px 12px",
                       fontWeight: "700",
-                      fontSize: "10px",
+                      fontSize: "9.5px",
                       letterSpacing: "0.8px",
-                      textAlign: i === 0 ? "left" : "right",
+                      textAlign: align as "left" | "right",
+                      width,
+                      borderBottom: "2px solid #ccc",
                     }}
                   >
-                    {h}
+                    {label}
                   </th>
                 ))}
               </tr>
             </thead>
             <tbody>
               {data.lineItems.map((item, idx) => (
-                <tr
-                  key={item.id}
-                  style={{ background: idx % 2 === 0 ? "#fff" : "#f9f9f9" }}
-                >
-                  <td
-                    style={{
-                      padding: "8px 12px",
-                      borderBottom: "1px solid #eee",
-                    }}
-                  >
+                <tr key={item.id} style={{ background: idx % 2 === 0 ? "#fff" : "#fafafa" }}>
+                  <td style={{ padding: "8px 12px", borderBottom: "1px solid #eee" }}>
                     {item.description || "—"}
                   </td>
-                  <td
-                    style={{
-                      padding: "8px 12px",
-                      textAlign: "right",
-                      borderBottom: "1px solid #eee",
-                    }}
-                  >
+                  <td style={{ padding: "8px 12px", textAlign: "right", borderBottom: "1px solid #eee" }}>
                     {item.qty}
                   </td>
-                  <td
-                    style={{
-                      padding: "8px 12px",
-                      textAlign: "right",
-                      borderBottom: "1px solid #eee",
-                    }}
-                  >
+                  <td style={{ padding: "8px 12px", textAlign: "right", borderBottom: "1px solid #eee" }}>
                     ${item.rate.toFixed(2)}
                   </td>
-                  <td
-                    style={{
-                      padding: "8px 12px",
-                      textAlign: "right",
-                      fontWeight: "700",
-                      borderBottom: "1px solid #eee",
-                    }}
-                  >
+                  <td style={{ padding: "8px 12px", textAlign: "right", fontWeight: "700", borderBottom: "1px solid #eee" }}>
                     ${(item.qty * item.rate).toFixed(2)}
                   </td>
                 </tr>
@@ -280,195 +203,100 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
           </table>
         </div>
 
-        {/* Totals + Payment Terms */}
-        <div
-          style={{
-            padding: "16px 28px 0",
-            display: "grid",
-            gridTemplateColumns: "1fr 220px",
-            gap: "20px",
-            alignItems: "start",
-          }}
-        >
-          {/* Payment Terms */}
-          <div>
-            {data.paymentTerms && (
-              <div
-                style={{
-                  background: "#fff8f0",
-                  border: "1px solid #f0c080",
-                  borderRadius: "4px",
-                  padding: "10px 12px",
-                  fontSize: "11px",
-                  color: "#555",
-                  lineHeight: "1.6",
-                }}
-              >
-                <div
-                  style={{
-                    fontWeight: "700",
-                    color: "#111",
-                    marginBottom: "4px",
-                    fontSize: "10px",
-                    textTransform: "uppercase",
-                    letterSpacing: "0.6px",
-                  }}
-                >
-                  PAYMENT TERMS
-                </div>
-                {data.paymentTerms}
-              </div>
-            )}
-          </div>
-
-          {/* Totals */}
-          <div>
+        {/* ── TOTALS BLOCK (right aligned) ── */}
+        <div style={{ padding: "0 56px", display: "flex", justifyContent: "flex-end" }}>
+          <div style={{ width: "240px", background: "#1a1a1a" }}>
             {[
-              ["Sub Total", `$${subTotal.toFixed(2)}`, false],
-              ["Discount", `$${data.discount.toFixed(2)}`, false],
-              ["Payment", `$${data.paymentReceived.toFixed(2)}`, false],
-              ["Balance", `$${balance.toFixed(2)}`, true],
-            ].map(([label, value, highlight]) => (
+              { label: "Sub Total", value: `$${subTotal.toFixed(2)}`, bold: false },
+              { label: "Discount", value: `$${data.discount.toFixed(2)}`, bold: false },
+              { label: "Payment", value: `$${data.paymentReceived.toFixed(2)}`, bold: false },
+            ].map(({ label, value }) => (
               <div
-                key={label as string}
+                key={label}
                 style={{
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
-                  padding: "6px 10px",
-                  marginBottom: "2px",
-                  background: highlight ? "#cc1f1f" : "#f7f7f7",
-                  borderRadius: "3px",
+                  padding: "7px 14px",
+                  borderBottom: "1px solid #2e2e2e",
                 }}
               >
-                <span
-                  style={{
-                    fontWeight: "700",
-                    fontSize: "11px",
-                    color: highlight ? "#fff" : "#444",
-                    textTransform: "uppercase",
-                    letterSpacing: "0.5px",
-                  }}
-                >
-                  {label as string}
-                </span>
-                <span
-                  style={{
-                    fontWeight: "900",
-                    fontSize: "13px",
-                    color: highlight ? "#fff" : "#111",
-                  }}
-                >
-                  {value as string}
-                </span>
+                <span style={{ fontSize: "10px", color: "#ccc" }}>{label}</span>
+                <span style={{ fontSize: "11px", fontWeight: "700", color: "#fff" }}>{value}</span>
               </div>
             ))}
+            {/* Balance row */}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                padding: "10px 14px",
+                background: "#1a1a1a",
+              }}
+            >
+              <span style={{ fontSize: "16px", fontWeight: "900", color: "#fff" }}>Balance</span>
+              <span style={{ fontSize: "16px", fontWeight: "900", color: "#fff" }}>${balance.toFixed(2)}</span>
+            </div>
           </div>
         </div>
 
-        {/* PKR Bank Details */}
-        <div style={{ padding: "16px 28px 0" }}>
-          <div
-            style={{
-              border: "1px solid #ddd",
-              borderRadius: "4px",
-              overflow: "hidden",
-            }}
-          >
+        {/* ── THANK YOU ── */}
+        <div style={{ padding: "32px 56px 20px", textAlign: "center" }}>
+          <span style={{ fontSize: "18px", fontWeight: "900", color: "#111" }}>
+            Thank you for your{" "}
+          </span>
+          <span style={{ fontSize: "18px", fontWeight: "900", color: "#cc1f1f" }}>
+            business!
+          </span>
+        </div>
+
+        {/* ── PAYMENT TERMS ── */}
+        {data.paymentTerms && (
+          <div style={{ padding: "0 56px 20px" }}>
+            <div style={{ borderTop: "1px solid #eee", paddingTop: "14px" }}>
+              <div
+                style={{
+                  fontSize: "8.5px",
+                  fontWeight: "700",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.8px",
+                  color: "#111",
+                  marginBottom: "5px",
+                }}
+              >
+                PAYMENT TERMS
+              </div>
+              <div style={{ fontSize: "10px", color: "#444", lineHeight: "1.6" }}>
+                {data.paymentTerms}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ── PKR BANK ── */}
+        <div style={{ padding: "0 56px 36px" }}>
+          <div style={{ borderTop: "1px solid #eee", paddingTop: "14px" }}>
             <div
               style={{
-                background: "#111",
-                color: "#fff",
-                padding: "6px 12px",
-                fontSize: "10px",
+                fontSize: "8.5px",
                 fontWeight: "700",
-                letterSpacing: "1px",
                 textTransform: "uppercase",
+                letterSpacing: "0.8px",
+                color: "#111",
+                marginBottom: "8px",
               }}
             >
-              PKR BANK DETAILS
+              PKR BANK
             </div>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr 1fr 1fr",
-                padding: "10px 12px",
-                gap: "8px",
-              }}
-            >
-              {[
-                ["Account Title", COMPANY_INFO.bankAccountTitle],
-                ["Account Number", COMPANY_INFO.bankAccountNumber],
-                ["IBAN", COMPANY_INFO.iban],
-                ["Bank Name", COMPANY_INFO.bankName],
-              ].map(([label, value]) => (
-                <div key={label}>
-                  <div
-                    style={{
-                      fontSize: "9px",
-                      color: "#cc1f1f",
-                      fontWeight: "700",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.5px",
-                      marginBottom: "2px",
-                    }}
-                  >
-                    {label}
-                  </div>
-                  <div style={{ fontSize: "10px", fontWeight: "700", color: "#111" }}>
-                    {value}
-                  </div>
-                </div>
-              ))}
+            <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
+              <div style={{ fontSize: "10px", color: "#444" }}>Account Title: {COMPANY_INFO.bankAccountTitle}</div>
+              <div style={{ fontSize: "10px", color: "#444" }}>Account Number: {COMPANY_INFO.bankAccountNumber}</div>
+              <div style={{ fontSize: "10px", color: "#444" }}>IBAN: {COMPANY_INFO.iban}</div>
+              <div style={{ fontSize: "10px", color: "#444" }}>Bank Name: {COMPANY_INFO.bankName}</div>
             </div>
           </div>
         </div>
-
-        {/* Footer */}
-        <div style={{ padding: "16px 28px 20px" }}>
-          <div
-            style={{
-              background: "#cc1f1f",
-              borderRadius: "4px",
-              padding: "10px 16px",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <span
-              style={{
-                color: "#fff",
-                fontWeight: "900",
-                fontSize: "13px",
-              fontFamily: "'Unbounded', 'Arial Black', sans-serif",
-              letterSpacing: "0.5px",
-              }}
-            >
-              Thank you for your business!
-            </span>
-            <span style={{ color: "#ffcccc", fontSize: "10px", fontStyle: "italic" }}>
-              NOTE: Please email us the payment receipt.
-            </span>
-          </div>
-
-          <div
-            style={{
-              marginTop: "10px",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              fontSize: "9px",
-              color: "#999",
-            }}
-          >
-            <span>{COMPANY_INFO.website} • {COMPANY_INFO.email} • {COMPANY_INFO.ordersEmail}</span>
-            <span style={{ color: "#cc1f1f", fontWeight: "700" }}>E. &amp; O. E</span>
-          </div>
-        </div>
-
-        {/* Bottom stripe */}
-        <div style={{ background: "#cc1f1f", height: "6px", width: "100%" }} />
       </div>
     );
   }

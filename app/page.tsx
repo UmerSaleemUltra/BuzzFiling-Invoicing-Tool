@@ -166,7 +166,7 @@ export default function Home() {
 
         {/* Right: Preview Panel */}
         <section className="flex-1 overflow-y-auto p-6 lg:p-8 bg-muted/30">
-          <div className="max-w-3xl mx-auto">
+          <div className="max-w-4xl mx-auto">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-widest">
                 Live Preview
