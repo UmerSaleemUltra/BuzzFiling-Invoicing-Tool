@@ -122,7 +122,7 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
         {/* Logo — large, centered */}
         <div style={{ marginBottom: "16px" }}>
           <img
-            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/images-SdNz6vfYoJoMVJMUFtXCjHac5xozpZ.png"
+            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-gRxKEWIH261PwsWA62vZ027l54RJEl.png"
             alt="Buzz Filing"
             crossOrigin="anonymous"
             style={{ height: "84px", width: "auto", objectFit: "contain", display: "inline-block" }}
@@ -165,7 +165,7 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
         display: "grid",
         gridTemplateColumns: "220px 1fr 180px",
         gap: "0",
-        alignItems: "start",
+        alignItems: "stretch",
       }}>
 
         {/* ── Bill To ── */}
@@ -222,7 +222,7 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
         </table>
 
         {/* ── Payment Status ── */}
-        <div>
+        <div style={{ display: "flex", flexDirection: "column" }}>
           <div style={{
             background: statusBg,
             color: C.white,
@@ -231,6 +231,10 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
             fontWeight: "700",
             fontSize: "9px",
             letterSpacing: "0.3px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            minHeight: "32px",
           }}>
             Payment Status
           </div>
@@ -243,6 +247,11 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
             fontSize: "10px",
             color: C.black,
             background: "#f5f5f5",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flex: 1,
+            minHeight: "32px",
           }}>
             {data.paymentStatus}
           </div>
@@ -252,7 +261,7 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
 
       {/* ── LINE ITEMS + TOTALS (unified table) ──────────────────────────── */}
       <div style={{ padding: `18px ${PAD}px 0` }}>
-        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "9.5px" }}>
+        <table style={{ width: "100%", borderCollapse: "collapse", borderSpacing: 0, fontSize: "9.5px" }}>
 
           {/* Column widths */}
           <colgroup>
@@ -297,29 +306,29 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
               );
             })}
 
-            {/* Totals rows — left 2 cols red bg, right 3 cols red bg */}
+            {/* Totals rows — all cols solid red, no borders */}
             {totalsRows.map(([label, value]) => (
               <tr key={label} style={{ background: C.red }}>
-                <td style={{ padding: "6px 12px", background: C.red }} />
-                <td style={{ padding: "6px 12px", background: C.red }} />
-                <td style={{ padding: "6px 12px", background: C.red }} />
+                <td style={{ padding: "5px 12px", background: C.red, border: "none" }} />
+                <td style={{ padding: "5px 12px", background: C.red, border: "none" }} />
+                <td style={{ padding: "5px 12px", background: C.red, border: "none" }} />
                 <td style={{
-                  padding: "6px 12px",
+                  padding: "5px 12px",
                   fontSize: "9px",
                   color: C.white,
                   fontWeight: "400",
                   textAlign: "left",
-                  borderBottom: `1px solid rgba(255,255,255,0.15)`,
+                  border: "none",
                 }}>
                   {label}
                 </td>
                 <td style={{
-                  padding: "6px 12px",
+                  padding: "5px 12px",
                   fontSize: "9.5px",
                   color: C.white,
                   fontWeight: "700",
                   textAlign: "right",
-                  borderBottom: `1px solid rgba(255,255,255,0.15)`,
+                  border: "none",
                 }}>
                   {value}
                 </td>
@@ -328,15 +337,16 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
 
             {/* Balance row */}
             <tr style={{ background: C.red }}>
-              <td style={{ padding: "10px 12px", background: C.red }} />
-              <td style={{ padding: "10px 12px", background: C.red }} />
-              <td style={{ padding: "10px 12px", background: C.red }} />
+              <td style={{ padding: "10px 12px", background: C.red, border: "none" }} />
+              <td style={{ padding: "10px 12px", background: C.red, border: "none" }} />
+              <td style={{ padding: "10px 12px", background: C.red, border: "none" }} />
               <td style={{
                 padding: "10px 12px",
                 fontSize: "15px",
                 fontWeight: "900",
                 color: C.white,
                 textAlign: "left",
+                border: "none",
               }}>
                 Balance
               </td>
@@ -346,6 +356,7 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
                 fontWeight: "900",
                 color: C.white,
                 textAlign: "right",
+                border: "none",
               }}>
                 ${balance.toFixed(2)}
               </td>
