@@ -80,7 +80,7 @@ export default function Home() {
     const { jsPDF } = await import("jspdf");
 
     const canvas = await html2canvas(el, {
-      scale: 1.8,
+      scale: 3.6,
       useCORS: true,
       backgroundColor: "#ffffff",
       logging: false,
@@ -128,7 +128,7 @@ export default function Home() {
     ctx.fillStyle = "#ffffff";
     ctx.fillRect(0, 0, offscreen.width, offscreen.height);
     ctx.drawImage(canvas, 0, 0);
-    const imgData = offscreen.toDataURL("image/jpeg", 0.88);
+    const imgData = offscreen.toDataURL("image/jpeg", 0.72);
 
     const pdf = new jsPDF({
       orientation: "portrait",
