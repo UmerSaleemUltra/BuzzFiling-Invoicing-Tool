@@ -250,56 +250,105 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
 
       </div>
 
-      {/* ── LINE ITEMS TABLE ──────────────────────────────────────────────── */}
+      {/* ── LINE ITEMS + TOTALS (unified table) ──────────────────────────── */}
       <div style={{ padding: `18px ${PAD}px 0` }}>
         <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "9.5px" }}>
+
+          {/* Column widths */}
+          <colgroup>
+            <col style={{ width: "auto" }} />
+            <col style={{ width: "110px" }} />
+            <col style={{ width: "60px"  }} />
+            <col style={{ width: "90px"  }} />
+            <col style={{ width: "100px" }} />
+          </colgroup>
+
+          {/* Header */}
           <thead>
             <tr style={{ background: C.headerBg }}>
-              <th style={thStyle({ textAlign: "left" })}>DESCRIPTION</th>
-              <th style={thStyle({ width: "110px" })} />
-              <th style={thStyle({ width: "60px",  textAlign: "center" })}>QTY</th>
-              <th style={thStyle({ width: "80px",  textAlign: "right"  })}>RATE</th>
-              <th style={thStyle({ width: "90px",  textAlign: "right"  })}>AMOUNT</th>
+              <th style={thStyle({ textAlign: "left",   padding: "9px 12px" })}>DESCRIPTION</th>
+              <th style={thStyle({ padding: "9px 12px" })} />
+              <th style={thStyle({ textAlign: "center", padding: "9px 12px" })}>QTY</th>
+              <th style={thStyle({ textAlign: "right",  padding: "9px 12px" })}>RATE</th>
+              <th style={thStyle({ textAlign: "right",  padding: "9px 12px" })}>AMOUNT</th>
             </tr>
           </thead>
+
           <tbody>
+            {/* Line item rows */}
             {data.lineItems.map((item, idx) => {
               const amount = item.qty * item.rate;
               return (
                 <tr key={item.id} style={{ background: idx % 2 === 0 ? C.white : C.rowAlt }}>
-                  <td style={cell({ fontWeight: "500" })}>
+                  <td style={cell({ fontWeight: "500", padding: "9px 12px" })}>
                     {item.description || "—"}
                   </td>
-                  <td style={cell({ color: C.grayText, fontSize: "8.5px" })}>
+                  <td style={cell({ color: C.grayText, fontSize: "8.5px", padding: "9px 12px" })}>
                     {item.rate === 0 ? "INCLUDED" : ""}
                   </td>
-                  <td style={cell({ textAlign: "center" })}>{item.qty}</td>
-                  <td style={cell({ textAlign: "right"  })}>${item.rate.toFixed(2)}</td>
-                  <td style={cell({ textAlign: "right",  fontWeight: "700" })}>${amount.toFixed(2)}</td>
+                  <td style={cell({ textAlign: "center", padding: "9px 12px" })}>{item.qty}</td>
+                  <td style={cell({ textAlign: "right",  padding: "9px 12px" })}>
+                    {item.rate === 0 ? "—" : `$${item.rate.toFixed(0)}`}
+                  </td>
+                  <td style={cell({ textAlign: "right", fontWeight: "700", padding: "9px 12px" })}>
+                    {item.rate === 0 ? "—" : `$${amount.toFixed(0)}`}
+                  </td>
                 </tr>
               );
             })}
-          </tbody>
-        </table>
-      </div>
 
-      {/* ── TOTALS ────────────────────────────────────────────────────────── */}
-      <div style={{ padding: `0 ${PAD}px`, display: "flex", justifyContent: "flex-end" }}>
-        <table style={{ borderCollapse: "collapse", width: "240px", background: C.darkBg }}>
-          <tbody>
+            {/* Totals rows — left 2 cols red bg, right 3 cols red bg */}
             {totalsRows.map(([label, value]) => (
-              <tr key={label}>
-                <td style={{ padding: "6px 14px", fontSize: "9px", color: "#cccccc", borderBottom: `1px solid ${C.darkBorder}`, fontWeight: "400" }}>
+              <tr key={label} style={{ background: C.red }}>
+                <td style={{ padding: "6px 12px", background: C.red }} />
+                <td style={{ padding: "6px 12px", background: C.red }} />
+                <td style={{ padding: "6px 12px", background: C.red }} />
+                <td style={{
+                  padding: "6px 12px",
+                  fontSize: "9px",
+                  color: C.white,
+                  fontWeight: "400",
+                  textAlign: "left",
+                  borderBottom: `1px solid rgba(255,255,255,0.15)`,
+                }}>
                   {label}
                 </td>
-                <td style={{ padding: "6px 14px", fontSize: "9.5px", color: C.white, borderBottom: `1px solid ${C.darkBorder}`, fontWeight: "700", textAlign: "right" }}>
+                <td style={{
+                  padding: "6px 12px",
+                  fontSize: "9.5px",
+                  color: C.white,
+                  fontWeight: "700",
+                  textAlign: "right",
+                  borderBottom: `1px solid rgba(255,255,255,0.15)`,
+                }}>
                   {value}
                 </td>
               </tr>
             ))}
-            <tr>
-              <td style={{ padding: "10px 14px", fontSize: "15px", fontWeight: "900", color: C.white }}>Balance</td>
-              <td style={{ padding: "10px 14px", fontSize: "15px", fontWeight: "900", color: C.white, textAlign: "right" }}>${balance.toFixed(2)}</td>
+
+            {/* Balance row */}
+            <tr style={{ background: C.red }}>
+              <td style={{ padding: "10px 12px", background: C.red }} />
+              <td style={{ padding: "10px 12px", background: C.red }} />
+              <td style={{ padding: "10px 12px", background: C.red }} />
+              <td style={{
+                padding: "10px 12px",
+                fontSize: "15px",
+                fontWeight: "900",
+                color: C.white,
+                textAlign: "left",
+              }}>
+                Balance
+              </td>
+              <td style={{
+                padding: "10px 12px",
+                fontSize: "14px",
+                fontWeight: "900",
+                color: C.white,
+                textAlign: "right",
+              }}>
+                ${balance.toFixed(2)}
+              </td>
             </tr>
           </tbody>
         </table>
