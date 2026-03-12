@@ -20,6 +20,8 @@ interface InvoiceFormProps {
   setData: Dispatch<SetStateAction<InvoiceData>>;
   onDownload: () => void;
   onReset: () => void;
+  fileName: string;
+  setFileName: Dispatch<SetStateAction<string>>;
 }
 
 export default function InvoiceForm({
@@ -27,6 +29,8 @@ export default function InvoiceForm({
   setData,
   onDownload,
   onReset,
+  fileName,
+  setFileName,
 }: InvoiceFormProps) {
   const updateField = <K extends keyof InvoiceData>(
     key: K,
@@ -308,6 +312,19 @@ export default function InvoiceForm({
 
       {/* Actions */}
       <div className="flex flex-col gap-2 pt-2 border-t border-border">
+        <div className="flex flex-col gap-1.5">
+          <Label htmlFor="fileName">File Name (optional)</Label>
+          <div className="flex items-center gap-1.5">
+            <Input
+              id="fileName"
+              placeholder={`Invoice-${data.invoiceNumber}-${data.billTo.replace(/\s+/g, "-") || "Client"}`}
+              value={fileName}
+              onChange={(e) => setFileName(e.target.value)}
+              className="field-input flex-1"
+            />
+            <span className="text-xs text-muted-foreground flex-shrink-0">.pdf</span>
+          </div>
+        </div>
         <Button
           className="w-full bg-primary text-primary-foreground hover:bg-primary/90 font-bold rounded-full cursor-pointer"
           onClick={onDownload}

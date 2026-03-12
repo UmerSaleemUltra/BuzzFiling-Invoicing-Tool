@@ -26,6 +26,7 @@ export default function Home() {
   }));
 
   const [mounted, setMounted] = useState(false);
+  const [fileName, setFileName] = useState("");
   const previewRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -52,7 +53,7 @@ export default function Home() {
     const { jsPDF } = await import("jspdf");
 
     const canvas = await html2canvas(el, {
-      scale: 1.5,
+      scale: 2,
       useCORS: true,
       backgroundColor: "#ffffff",
       logging: false,
@@ -91,7 +92,7 @@ export default function Home() {
     const A4_W = 210;
     const A4_H = 297;
 
-    const imgData = canvas.toDataURL("image/jpeg", 0.75);
+    const imgData = canvas.toDataURL("image/jpeg", 0.92);
     const pdf = new jsPDF({
       orientation: "portrait",
       unit: "mm",
@@ -110,8 +111,9 @@ export default function Home() {
       yOffset += A4_H;
     }
 
-    const fileName = `Invoice-${invoiceData.invoiceNumber}-${invoiceData.billTo.replace(/\s+/g, "-")}.pdf`;
-    pdf.save(fileName);
+    const defaultName = `Invoice-${invoiceData.invoiceNumber}-${invoiceData.billTo.replace(/\s+/g, "-")}`;
+    const resolvedName = fileName.trim() ? fileName.trim().replace(/\.pdf$/i, "") : defaultName;
+    pdf.save(`${resolvedName}.pdf`);
 
     // Save next invoice number AFTER successful download, without resetting the form
     saveInvoiceNumber(invoiceData.invoiceNumber + 1);
@@ -161,6 +163,8 @@ export default function Home() {
             setData={setInvoiceData}
             onDownload={handleDownload}
             onReset={handleReset}
+            fileName={fileName}
+            setFileName={setFileName}
           />
         </aside>
 
