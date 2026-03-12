@@ -34,7 +34,7 @@ export default function Home() {
     setMounted(true);
   }, []);
 
-  const handleDownload = useCallback(() => {
+  const handleDownload = useCallback(async () => {
     if (!invoiceData.billTo.trim()) {
       alert("Please enter a client name (Bill To) before downloading.");
       return;
@@ -44,28 +44,34 @@ export default function Home() {
       return;
     }
 
-    // Save the incremented invoice number for next use
+    const el = document.getElementById("invoice-preview");
+    if (!el) return;
+
+    // Dynamically import to avoid SSR issues
+    const html2canvas = (await import("html2canvas")).default;
+    const { jsPDF } = await import("jspdf");
+
+    const canvas = await html2canvas(el, {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: "#ffffff",
+      logging: false,
+    });
+
+    const imgData = canvas.toDataURL("image/png");
+    const pdf = new jsPDF({
+      orientation: "portrait",
+      unit: "px",
+      format: [canvas.width / 2, canvas.height / 2],
+    });
+
+    pdf.addImage(imgData, "PNG", 0, 0, canvas.width / 2, canvas.height / 2);
+
+    const fileName = `Invoice-${invoiceData.invoiceNumber}-${invoiceData.billTo.replace(/\s+/g, "-")}.pdf`;
+    pdf.save(fileName);
+
+    // Save next invoice number AFTER successful download, without resetting the form
     saveInvoiceNumber(invoiceData.invoiceNumber + 1);
-
-    // Print only the invoice preview
-    const printContent = document.getElementById("invoice-preview");
-    if (!printContent) return;
-
-    const originalBody = document.body.innerHTML;
-    const styles = `
-      <style>
-        @media print {
-          body { margin: 0; padding: 0; }
-          #invoice-preview { box-shadow: none !important; max-width: 100% !important; }
-        }
-        body { font-family: Arial, Helvetica, sans-serif; margin: 0; padding: 0; }
-      </style>
-    `;
-
-    document.body.innerHTML = styles + printContent.outerHTML;
-    window.print();
-    document.body.innerHTML = originalBody;
-    window.location.reload();
   }, [invoiceData]);
 
   const handleReset = useCallback(() => {
