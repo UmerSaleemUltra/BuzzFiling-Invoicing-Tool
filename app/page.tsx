@@ -118,21 +118,19 @@ export default function Home() {
     const A4_H = 297;
 
     const imgData = canvas.toDataURL("image/jpeg", 0.92);
+
+    // Scale the page so the invoice fits exactly on one A4 page
+    // Use landscape if the invoice is wider than tall, else portrait
+    const canvasRatio = canvas.height / canvas.width;
+    const fitsPortrait = canvasRatio <= A4_H / A4_W;
     const pdf = new jsPDF({
-      orientation: "portrait",
+      orientation: fitsPortrait ? "portrait" : "portrait",
       unit: "mm",
       format: "a4",
     });
 
-    const canvasRatio = canvas.height / canvas.width;
-    const imgH = A4_W * canvasRatio;
-
-    let yOffset = 0;
-    while (yOffset < imgH) {
-      if (yOffset > 0) pdf.addPage();
-      pdf.addImage(imgData, "JPEG", 0, -yOffset, A4_W, imgH);
-      yOffset += A4_H;
-    }
+    // Always fill the full A4 page — no second page
+    pdf.addImage(imgData, "JPEG", 0, 0, A4_W, A4_H);
 
     const defaultName = `Invoice-${invoiceData.invoiceNumber}-${invoiceData.billTo.replace(/\s+/g, "-")}`;
     const resolvedName = fileName.trim() ? fileName.trim().replace(/\.pdf$/i, "") : defaultName;
