@@ -355,60 +355,46 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
       </div>
 
       {/* ── THANK YOU ─────────────────────────────────────────────────────── */}
-      <div style={{ padding: `26px ${PAD}px 6px`, textAlign: "center" }}>
-        <span style={{ fontSize: "16px", fontWeight: "900", color: C.black }}>Thank you for your </span>
-        <span style={{ fontSize: "16px", fontWeight: "900", color: C.red   }}>business!</span>
-      </div>
-      <div style={{ padding: `2px ${PAD}px 16px`, textAlign: "center" }}>
-        <span style={{ fontSize: "8px", color: "#777777" }}>NOTE : Please email us the payment receipt.</span>
+      <div style={{ padding: `32px ${PAD}px 28px`, textAlign: "center" }}>
+        <span style={{ fontSize: "18px", fontWeight: "900", color: C.black }}>Thank you for your </span>
+        <span style={{ fontSize: "18px", fontWeight: "900", color: C.red   }}>business!</span>
       </div>
 
       {/* ── PAYMENT TERMS ─────────────────────────────────────────────────── */}
-      <div style={{ margin: `0 ${PAD}px`, borderTop: `1px solid ${C.border}` }} />
-      <div style={{ padding: `14px ${PAD}px 8px` }}>
+      <div style={{ padding: `0 ${PAD}px 20px` }}>
         <div style={labelStyle}>PAYMENT TERMS</div>
-        <div style={{ fontSize: "9px", color: C.dimText, lineHeight: "1.7" }}>
+        <div style={{ fontSize: "9px", color: C.dimText, lineHeight: "1.8" }}>
           {data.paymentTerms || "—"}
         </div>
       </div>
 
-      {/* ── FLEX SPACER ───────────────────────────────────────────────────── */}
-      <div style={{ flex: 1, minHeight: "20px" }} />
-
       {/* ── PKR BANK ──────────────────────────────────────────────────────── */}
-      <div style={{ padding: `0 ${PAD}px 18px` }}>
-        <div style={{ borderTop: `1px solid ${C.border}`, paddingTop: "12px" }}>
-          <div style={labelStyle}>PKR BANK</div>
-          <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
-            {bankRows.map(([label, value]) => (
-              <div key={label} style={{ fontSize: "9px", color: C.dimText }}>
-                {label}: {value}
-              </div>
-            ))}
-          </div>
+      <div style={{ padding: `0 ${PAD}px 24px` }}>
+        <div style={labelStyle}>PKR BANK</div>
+        <div style={{ display: "flex", flexDirection: "column", gap: "3px" }}>
+          {bankRows.map(([label, value]) => (
+            <div key={label} style={{ fontSize: "9px", color: C.dimText, lineHeight: "1.6" }}>
+              {label}: {value}
+            </div>
+          ))}
         </div>
       </div>
 
+      {/* ── FLEX SPACER ───────────────────────────────────────────────────── */}
+      <div style={{ flex: 1 }} />
+
       {/* ── PRE-FOOTER ROW ────────────────────────────────────────────────── */}
       <div style={{
-        display: "flex", justifyContent: "space-between", alignItems: "center",
-        padding: `8px ${PAD}px`, borderTop: `1px solid ${C.border}`,
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        padding: `10px ${PAD}px`,
+        borderTop: `1px dashed ${C.border}`,
+        marginTop: "8px",
       }}>
-        <span style={{ fontSize: "7.5px", color: C.muted, letterSpacing: "0.3px" }}>E. &amp; O. G</span>
-        <span style={{ fontSize: "7.5px", color: C.subtle }}>NOTE : Please email us the payment receipt.</span>
+        <span style={{ fontSize: "8px", color: C.grayText, letterSpacing: "0.2px" }}>E. &amp; O. E</span>
+        <span style={{ fontSize: "8px", color: C.red, fontWeight: "500" }}>NOTE : Please email us the payment receipt.</span>
       </div>
-
-      {/* ── RED FOOTER BAR ────────────────────────────────────────────────── */}
-      <footer style={{ background: C.red, padding: `10px ${PAD}px`, textAlign: "center" }}>
-        <p style={{ fontSize: "8px", color: C.white, margin: "0 0 2px" }}>
-          {COMPANY_INFO.website}&nbsp;&nbsp;•&nbsp;&nbsp;
-          {COMPANY_INFO.email}&nbsp;&nbsp;•&nbsp;&nbsp;
-          {COMPANY_INFO.ordersEmail}
-        </p>
-        <p style={{ fontSize: "8px", color: C.white, margin: 0 }}>
-          {COMPANY_INFO.phones.join("  •  ")}
-        </p>
-      </footer>
 
     </div>
   );
