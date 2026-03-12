@@ -299,63 +299,35 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
               );
             })}
 
-            {/* Totals rows — all cols gradient, no borders */}
-            {totalsRows.map(([label, value]) => (
-              <tr key={label} style={{ background: GRADIENT }}>
-                <td style={{ padding: "5px 12px", background: GRADIENT, border: "none" }} />
-                <td style={{ padding: "5px 12px", background: GRADIENT, border: "none" }} />
-                <td style={{ padding: "5px 12px", background: GRADIENT, border: "none" }} />
-                <td style={{
-                  padding: "5px 12px",
-                  fontSize: "9px",
-                  color: C.white,
-                  fontWeight: "400",
-                  textAlign: "left",
-                  border: "none",
-                }}>
-                  {label}
-                </td>
-                <td style={{
-                  padding: "5px 12px",
-                  fontSize: "9.5px",
-                  color: C.white,
-                  fontWeight: "700",
-                  textAlign: "right",
-                  border: "none",
-                }}>
-                  {value}
-                </td>
-              </tr>
-            ))}
-
-            {/* Balance row */}
-            <tr style={{ background: GRADIENT }}>
-              <td style={{ padding: "10px 12px", background: GRADIENT, border: "none" }} />
-              <td style={{ padding: "10px 12px", background: GRADIENT, border: "none" }} />
-              <td style={{ padding: "10px 12px", background: GRADIENT, border: "none" }} />
-              <td style={{
-                padding: "10px 12px",
-                fontSize: "15px",
-                fontWeight: "900",
-                color: C.white,
-                textAlign: "left",
-                border: "none",
-              }}>
-                Balance
-              </td>
-              <td style={{
-                padding: "10px 12px",
-                fontSize: "14px",
-                fontWeight: "900",
-                color: C.white,
-                textAlign: "right",
-                border: "none",
-              }}>
-                ${balance.toFixed(2)}
-              </td>
-            </tr>
           </tbody>
         </table>
+
+        {/* Totals block — divs so html2canvas renders gradient correctly */}
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          {totalsRows.map(([label, value]) => (
+            <div key={label} style={{
+              background: GRADIENT,
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              padding: "5px 12px",
+            }}>
+              <span style={{ fontSize: "9px", color: C.white, fontWeight: "400" }}>{label}</span>
+              <span style={{ fontSize: "9.5px", color: C.white, fontWeight: "700" }}>{value}</span>
+            </div>
+          ))}
+          {/* Balance row */}
+          <div style={{
+            background: GRADIENT,
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            padding: "10px 12px",
+          }}>
+            <span style={{ fontSize: "15px", fontWeight: "900", color: C.white }}>Balance</span>
+            <span style={{ fontSize: "14px", fontWeight: "900", color: C.white }}>${balance.toFixed(2)}</span>
+          </div>
+        </div>
       </div>
 
       {/* ── THANK YOU ─────────────────────────────────────────────────────── */}
