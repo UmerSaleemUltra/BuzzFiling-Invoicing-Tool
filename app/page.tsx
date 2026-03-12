@@ -80,10 +80,12 @@ export default function Home() {
     const { jsPDF } = await import("jspdf");
 
     const canvas = await html2canvas(el, {
-      scale: 2,
+      scale: 1.8,
       useCORS: true,
       backgroundColor: "#ffffff",
       logging: false,
+      imageTimeout: 0,
+      removeContainer: true,
       onclone: (clonedDoc) => {
         const root = clonedDoc.documentElement;
         const hexOverrides: Record<string, string> = {
@@ -117,20 +119,25 @@ export default function Home() {
     const A4_W = 210;
     const A4_H = 297;
 
-    const imgData = canvas.toDataURL("image/jpeg", 0.92);
+    // Use a second canvas to compress: draw at 96% quality into an offscreen canvas
+    // then export as JPEG at high quality — sharp text, smaller file than PNG
+    const offscreen = document.createElement("canvas");
+    offscreen.width  = canvas.width;
+    offscreen.height = canvas.height;
+    const ctx = offscreen.getContext("2d")!;
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, offscreen.width, offscreen.height);
+    ctx.drawImage(canvas, 0, 0);
+    const imgData = offscreen.toDataURL("image/jpeg", 0.88);
 
-    // Scale the page so the invoice fits exactly on one A4 page
-    // Use landscape if the invoice is wider than tall, else portrait
-    const canvasRatio = canvas.height / canvas.width;
-    const fitsPortrait = canvasRatio <= A4_H / A4_W;
     const pdf = new jsPDF({
-      orientation: fitsPortrait ? "portrait" : "portrait",
+      orientation: "portrait",
       unit: "mm",
       format: "a4",
     });
 
-    // Always fill the full A4 page — no second page
-    pdf.addImage(imgData, "JPEG", 0, 0, A4_W, A4_H);
+    // Always fill the full A4 page — one page only
+    pdf.addImage(imgData, "JPEG", 0, 0, A4_W, A4_H, undefined, "FAST");
 
     const defaultName = `Invoice-${invoiceData.invoiceNumber}-${invoiceData.billTo.replace(/\s+/g, "-")}`;
     const resolvedName = fileName.trim() ? fileName.trim().replace(/\.pdf$/i, "") : defaultName;
