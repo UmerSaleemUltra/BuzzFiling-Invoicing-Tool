@@ -191,6 +191,15 @@ export default function Home() {
 
         {/* Left: Form */}
         <aside className="w-full lg:w-[400px] xl:w-[420px] flex-shrink-0 bg-white border-b lg:border-b-0 lg:border-r border-border lg:h-[calc(100vh-56px)] lg:sticky lg:top-14 overflow-y-auto">
+          <InvoiceForm
+            data={invoiceData}
+            setData={setInvoiceData}
+            onDownload={handleDownload}
+            onReset={handleReset}
+            fileName={fileName}
+            setFileName={setFileName}
+          />
+        </aside>
 
         {/* Right: Preview */}
         <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-10" style={{ background: "#f3f4f6" }}>
