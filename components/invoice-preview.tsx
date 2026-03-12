@@ -224,7 +224,7 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
         </table>
 
         {/* ── Payment Status ── */}
-        <div style={{ display: "flex", flexDirection: "column" }}>
+        <div style={{ display: "block" }}>
           <div style={{
             background: statusBg,
             color: C.white,
@@ -232,10 +232,9 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
             fontSize: "13px",
             letterSpacing: "0.3px",
             height: "44px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
+            lineHeight: "44px",
             textAlign: "center",
+            overflow: "hidden",
           }}>
             Payment Status
           </div>
@@ -247,10 +246,9 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
             color: C.black,
             background: "#f5f5f5",
             height: "44px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
+            lineHeight: "44px",
             textAlign: "center",
+            overflow: "hidden",
           }}>
             {data.paymentStatus}
           </div>
