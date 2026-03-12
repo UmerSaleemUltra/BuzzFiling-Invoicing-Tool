@@ -69,9 +69,12 @@ export default function InvoiceForm({
     <div className="flex flex-col divide-y divide-border">
 
       {/* ── Title ── */}
-      <div className="px-5 py-5">
-        <h2 className="text-sm font-semibold text-foreground">Invoice Details</h2>
-        <p className="text-xs text-muted-foreground mt-0.5">Preview updates live as you type</p>
+      <div className="px-5 py-5 flex items-center gap-3">
+        <span className="w-0.5 h-5 rounded-full" style={{ background: "linear-gradient(135deg, #ff0d13 0%, #ff6b00 100%)" }} />
+        <div>
+          <h2 className="text-sm font-bold" style={{ color: "#0d0f1a" }}>Invoice Details</h2>
+          <p className="text-[11px] mt-0.5" style={{ color: "#6b7280" }}>Preview updates live as you type</p>
+        </div>
       </div>
 
       {/* ── Client Info ── */}
@@ -264,8 +267,11 @@ export default function InvoiceForm({
 
           {/* Balance (read-only) */}
           <div className="flex flex-col gap-1.5">
-            <Label className="text-xs text-primary font-semibold">Balance</Label>
-            <div className="h-9 flex items-center px-4 rounded-full border-2 border-primary/40 bg-primary/8 text-xs font-bold text-primary tabular-nums">
+            <Label className="text-xs font-bold" style={{ color: "#ff0d13" }}>Balance</Label>
+            <div
+              className="h-9 flex items-center px-4 rounded-full text-xs font-bold text-white tabular-nums"
+              style={{ background: "linear-gradient(135deg, #ff0d13 0%, #ff6b00 100%)" }}
+            >
               ${balance.toFixed(2)}
             </div>
           </div>
@@ -304,14 +310,15 @@ export default function InvoiceForm({
         </div>
 
         <Button
-          className="w-full h-10 bg-primary text-primary-foreground hover:bg-primary/90 font-semibold rounded-full cursor-pointer text-xs tracking-wide"
+          className="w-full h-10 text-white font-semibold rounded-full cursor-pointer text-xs tracking-wider border-0 transition-opacity hover:opacity-90"
+          style={{ background: "linear-gradient(135deg, #ff0d13 0%, #ff6b00 100%)" }}
           onClick={onDownload}
         >
           Download PDF
         </Button>
         <Button
           variant="outline"
-          className="w-full h-9 rounded-full cursor-pointer text-xs text-muted-foreground"
+          className="w-full h-9 rounded-full cursor-pointer text-xs text-muted-foreground border-border hover:bg-secondary"
           onClick={onReset}
         >
           Reset Form
