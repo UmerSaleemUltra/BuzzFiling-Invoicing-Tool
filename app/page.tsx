@@ -216,7 +216,7 @@ export default function Home() {
               </span>
             </div>
             {/* Horizontally scrollable on small screens */}
-            <div className="overflow-x-auto rounded-lg shadow-md">
+            <div className="overflow-x-auto">
               <InvoicePreview ref={previewRef} data={invoiceData} />
             </div>
           </div>
