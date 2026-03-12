@@ -56,6 +56,35 @@ export default function Home() {
       useCORS: true,
       backgroundColor: "#ffffff",
       logging: false,
+      onclone: (clonedDoc) => {
+        // html2canvas cannot parse oklch/lab CSS color functions.
+        // Override all CSS custom properties used in the invoice with plain hex values.
+        const root = clonedDoc.documentElement;
+        const hexOverrides: Record<string, string> = {
+          "--background": "#f7f7f7",
+          "--foreground": "#111111",
+          "--card": "#ffffff",
+          "--card-foreground": "#111111",
+          "--popover": "#ffffff",
+          "--popover-foreground": "#111111",
+          "--primary": "#cc1f1f",
+          "--primary-foreground": "#ffffff",
+          "--secondary": "#f2f2f2",
+          "--secondary-foreground": "#111111",
+          "--muted": "#ededed",
+          "--muted-foreground": "#777777",
+          "--accent": "#cc1f1f",
+          "--accent-foreground": "#ffffff",
+          "--destructive": "#cc1f1f",
+          "--destructive-foreground": "#ffffff",
+          "--border": "#dddddd",
+          "--input": "#dddddd",
+          "--ring": "#cc1f1f",
+        };
+        Object.entries(hexOverrides).forEach(([prop, value]) => {
+          root.style.setProperty(prop, value);
+        });
+      },
     });
 
     // A4 in mm: 210 x 297
