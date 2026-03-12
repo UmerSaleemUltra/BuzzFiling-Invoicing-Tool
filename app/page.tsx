@@ -52,20 +52,34 @@ export default function Home() {
     const { jsPDF } = await import("jspdf");
 
     const canvas = await html2canvas(el, {
-      scale: 2,
+      scale: 1.5,
       useCORS: true,
       backgroundColor: "#ffffff",
       logging: false,
     });
 
-    const imgData = canvas.toDataURL("image/png");
+    // A4 in mm: 210 x 297
+    const A4_W = 210;
+    const A4_H = 297;
+
+    const imgData = canvas.toDataURL("image/jpeg", 0.75);
     const pdf = new jsPDF({
       orientation: "portrait",
-      unit: "px",
-      format: [canvas.width / 2, canvas.height / 2],
+      unit: "mm",
+      format: "a4",
     });
 
-    pdf.addImage(imgData, "PNG", 0, 0, canvas.width / 2, canvas.height / 2);
+    // Scale image to fit A4 width, preserving aspect ratio
+    const canvasRatio = canvas.height / canvas.width;
+    const imgH = A4_W * canvasRatio;
+
+    // If content is taller than one A4 page, split across pages
+    let yOffset = 0;
+    while (yOffset < imgH) {
+      if (yOffset > 0) pdf.addPage();
+      pdf.addImage(imgData, "JPEG", 0, -yOffset, A4_W, imgH);
+      yOffset += A4_H;
+    }
 
     const fileName = `Invoice-${invoiceData.invoiceNumber}-${invoiceData.billTo.replace(/\s+/g, "-")}.pdf`;
     pdf.save(fileName);
