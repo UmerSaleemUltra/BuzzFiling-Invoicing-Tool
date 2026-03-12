@@ -117,36 +117,41 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
     >
 
       {/* ── HEADER ────────────────────────────────────────────────────────── */}
-      <header style={{ padding: `14px ${PAD}px 0`, textAlign: "right" }}>
-        <span style={{ fontSize: "7.5px", color: C.muted, letterSpacing: "0.4px" }}>
-          E. &amp; O. E
-        </span>
-      </header>
+      <header style={{ padding: `32px ${PAD}px 0`, textAlign: "center" }}>
 
-      {/* Logo */}
-      <div style={{ padding: `6px ${PAD}px`, textAlign: "center" }}>
-        <img
-          src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/images-SdNz6vfYoJoMVJMUFtXCjHac5xozpZ.png"
-          alt="Buzz Filing"
-          crossOrigin="anonymous"
-          style={{ height: "68px", width: "auto", objectFit: "contain" }}
-        />
-      </div>
+        {/* Logo — large, centered */}
+        <div style={{ marginBottom: "16px" }}>
+          <img
+            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/images-SdNz6vfYoJoMVJMUFtXCjHac5xozpZ.png"
+            alt="Buzz Filing"
+            crossOrigin="anonymous"
+            style={{ height: "84px", width: "auto", objectFit: "contain", display: "inline-block" }}
+          />
+        </div>
 
-      {/* Address block */}
-      <div style={{ padding: `0 ${PAD}px 4px`, textAlign: "center" }}>
-        <p style={{ fontSize: "8px", color: C.subtle, margin: "0 0 2px" }}>
+        {/* Address block */}
+        <p style={{ fontSize: "8.5px", color: "#555555", margin: "0 0 3px", letterSpacing: "0.1px" }}>
           {COMPANY_INFO.address}
         </p>
-        <p style={{ fontSize: "8px", color: C.subtle, margin: "0 0 2px" }}>
-          {COMPANY_INFO.website}&nbsp;&nbsp;•&nbsp;&nbsp;
-          {COMPANY_INFO.email}&nbsp;&nbsp;•&nbsp;&nbsp;
+        <p style={{ fontSize: "8.5px", color: "#555555", margin: "0 0 3px" }}>
+          {COMPANY_INFO.website}
+          <span style={{ margin: "0 5px", color: "#aaaaaa" }}>•</span>
+          {COMPANY_INFO.email}
+          <span style={{ margin: "0 5px", color: "#aaaaaa" }}>•</span>
           {COMPANY_INFO.ordersEmail}
         </p>
-        <p style={{ fontSize: "8px", color: C.subtle, margin: 0 }}>
-          {COMPANY_INFO.phones.join("  •  ")}
+        <p style={{ fontSize: "8.5px", color: "#555555", margin: "0 0 20px" }}>
+          {COMPANY_INFO.phones.map((p, i) => (
+            <span key={p}>
+              {i > 0 && <span style={{ margin: "0 5px", color: "#aaaaaa" }}>•</span>}
+              {p}
+            </span>
+          ))}
         </p>
-      </div>
+
+        {/* Divider */}
+        <hr style={{ border: "none", borderTop: `1px solid ${C.border}`, margin: 0 }} />
+      </header>
 
       {/* ── TITLE ─────────────────────────────────────────────────────────── */}
       <div style={{ padding: `22px ${PAD}px 14px` }}>
