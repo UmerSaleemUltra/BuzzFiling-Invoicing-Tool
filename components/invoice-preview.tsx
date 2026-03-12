@@ -119,28 +119,28 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
       {/* ── HEADER ────────────────────────────────────────────────────────── */}
       <header style={{ padding: `32px ${PAD}px 0`, textAlign: "center" }}>
 
-        {/* Logo — large, centered */}
-        <div style={{ marginBottom: "16px" }}>
+        {/* Logo — 150px, no bottom gap */}
+        <div style={{ marginBottom: "0px" }}>
           <img
             src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-gRxKEWIH261PwsWA62vZ027l54RJEl.png"
             alt="Buzz Filing"
             crossOrigin="anonymous"
-            style={{ height: "100px", width: "auto", objectFit: "contain", display: "inline-block" }}
+            style={{ height: "150px", width: "auto", objectFit: "contain", display: "inline-block" }}
           />
         </div>
 
         {/* Address block */}
-        <p style={{ fontSize: "8.5px", color: "#555555", margin: "0 0 3px", letterSpacing: "0.1px" }}>
+        <p style={{ fontSize: "9.5px", color: "#555555", margin: "0 0 3px", letterSpacing: "0.1px" }}>
           {COMPANY_INFO.address}
         </p>
-        <p style={{ fontSize: "8.5px", color: "#555555", margin: "0 0 3px" }}>
+        <p style={{ fontSize: "9.5px", color: "#555555", margin: "0 0 3px" }}>
           {COMPANY_INFO.website}
           <span style={{ margin: "0 5px", color: "#aaaaaa" }}>•</span>
           {COMPANY_INFO.email}
           <span style={{ margin: "0 5px", color: "#aaaaaa" }}>•</span>
           {COMPANY_INFO.ordersEmail}
         </p>
-        <p style={{ fontSize: "8.5px", color: "#555555", margin: "0 0 20px" }}>
+        <p style={{ fontSize: "9.5px", color: "#555555", margin: "0 0 20px" }}>
           {COMPANY_INFO.phones.map((p, i) => (
             <span key={p}>
               {i > 0 && <span style={{ margin: "0 5px", color: "#aaaaaa" }}>•</span>}
@@ -222,19 +222,18 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
         </table>
 
         {/* ── Payment Status ── */}
-        <div style={{ display: "flex", flexDirection: "column" }}>
+        <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
           <div style={{
             background: statusBg,
             color: C.white,
             textAlign: "center",
-            padding: "8px 10px",
             fontWeight: "700",
-            fontSize: "9px",
+            fontSize: "10px",
             letterSpacing: "0.3px",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            minHeight: "32px",
+            flex: 1,
           }}>
             Payment Status
           </div>
@@ -242,16 +241,14 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
             border: `1px solid ${C.border}`,
             borderTop: "none",
             textAlign: "center",
-            padding: "7px 10px",
             fontWeight: "600",
-            fontSize: "10px",
+            fontSize: "11px",
             color: C.black,
             background: "#f5f5f5",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             flex: 1,
-            minHeight: "32px",
           }}>
             {data.paymentStatus}
           </div>
