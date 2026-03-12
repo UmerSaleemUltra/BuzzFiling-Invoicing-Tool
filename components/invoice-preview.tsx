@@ -161,115 +161,90 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
 
       {/* ── META ROW ──────────────────────────────────────────────────────── */}
       <div style={{
-        padding: `0 ${PAD}px`,
+        padding: `14px ${PAD}px 14px`,
         display: "grid",
-        gridTemplateColumns: "1fr 1fr 190px",
+        gridTemplateColumns: "220px 1fr 180px",
         gap: "0",
-        alignItems: "stretch",
-        borderTop: `2px solid ${C.border}`,
-        borderBottom: `2px solid ${C.border}`,
-        marginTop: "0",
+        alignItems: "start",
       }}>
 
         {/* ── Bill To ── */}
-        <div style={{
-          padding: "16px 18px 16px 0",
-          borderRight: `1px solid ${C.border}`,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          gap: "6px",
-        }}>
+        <div>
           <div style={{
-            fontSize: "7px",
-            fontWeight: "800",
+            fontSize: "7.5px",
+            fontWeight: "700",
             textTransform: "uppercase",
-            letterSpacing: "1.2px",
-            color: C.muted,
+            letterSpacing: "0.8px",
+            color: C.black,
+            marginBottom: "4px",
           }}>
-            Bill To
+            BILL TO
           </div>
           <div style={{
-            fontSize: "11.5px",
-            fontWeight: "700",
+            fontSize: "9.5px",
+            fontWeight: "600",
             color: C.black,
-            lineHeight: 1.35,
+            lineHeight: 1.5,
           }}>
             {data.billTo || "—"}
           </div>
         </div>
 
         {/* ── Invoice fields ── */}
-        <div style={{
-          padding: "16px 18px",
-          borderRight: `1px solid ${C.border}`,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          gap: "7px",
-        }}>
-          {metaRows.map(([label, value, bold]) => (
-            <div key={label} style={{ display: "flex", alignItems: "baseline", gap: "10px" }}>
-              <span style={{
-                fontSize: "6.8px",
-                fontWeight: "800",
-                textTransform: "uppercase",
-                letterSpacing: "0.9px",
-                color: C.muted,
-                minWidth: "90px",
-                flexShrink: 0,
-              }}>
-                {label}
-              </span>
-              <span style={{
-                fontSize: "9.5px",
-                fontWeight: bold ? "700" : "500",
-                color: C.black,
-                lineHeight: 1.3,
-              }}>
-                {value}
-              </span>
-            </div>
-          ))}
-        </div>
+        <table style={{ borderCollapse: "collapse", fontSize: "9px" }}>
+          <tbody>
+            {metaRows.map(([label, value, bold]) => (
+              <tr key={label}>
+                <td style={{
+                  fontSize: "7.5px",
+                  fontWeight: "700",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.6px",
+                  color: C.black,
+                  padding: "2.5px 16px 2.5px 0",
+                  whiteSpace: "nowrap",
+                  verticalAlign: "top",
+                }}>
+                  {label}
+                </td>
+                <td style={{
+                  fontSize: "9.5px",
+                  fontWeight: bold ? "700" : "400",
+                  color: C.black,
+                  padding: "2.5px 0",
+                  verticalAlign: "top",
+                }}>
+                  {value}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
 
         {/* ── Payment Status ── */}
-        <div style={{
-          display: "flex",
-          flexDirection: "column",
-        }}>
-          {/* Status header strip */}
+        <div>
           <div style={{
             background: statusBg,
             color: C.white,
             textAlign: "center",
-            padding: "10px 12px",
-            fontWeight: "800",
-            fontSize: "8.5px",
-            letterSpacing: "0.5px",
-            textTransform: "uppercase",
-            flex: "0 0 auto",
+            padding: "8px 10px",
+            fontWeight: "700",
+            fontSize: "9px",
+            letterSpacing: "0.3px",
           }}>
             Payment Status
           </div>
-          {/* Status value */}
           <div style={{
-            flex: 1,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            borderLeft: `2px solid ${statusBg}`,
-            background: `${statusBg}0d`,
-            padding: "10px 12px",
+            border: `1px solid ${C.border}`,
+            borderTop: "none",
+            textAlign: "center",
+            padding: "7px 10px",
+            fontWeight: "600",
+            fontSize: "10px",
+            color: C.black,
+            background: "#f5f5f5",
           }}>
-            <span style={{
-              fontSize: "11px",
-              fontWeight: "700",
-              color: statusBg,
-              letterSpacing: "0.2px",
-            }}>
-              {data.paymentStatus}
-            </span>
+            {data.paymentStatus}
           </div>
         </div>
 
