@@ -190,7 +190,7 @@ export default function Home() {
       <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
 
         {/* Left: Form */}
-        <aside className="w-full lg:w-[400px] xl:w-[420px] flex-shrink-0 bg-white border-b lg:border-b-0 lg:border-r border-border lg:h-[calc(100vh-56px)] lg:sticky lg:top-14 overflow-y-auto">
+        <aside className="w-full lg:w-[400px] xl:w-[420px] flex-shrink-0 bg-white border-b lg:border-b-0 lg:border-r border-border">
           <InvoiceForm
             data={invoiceData}
             setData={setInvoiceData}
