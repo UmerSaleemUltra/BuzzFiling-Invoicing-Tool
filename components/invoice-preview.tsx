@@ -303,13 +303,14 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
         </table>
 
         {/* Totals block — full-width grid divs, gradient on each row div directly */}
-        <div style={{ display: "flex", flexDirection: "column" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 0, lineHeight: 1 }}>
           {totalsRows.map(([label, value]) => (
             <div key={label} style={{
               background: GRADIENT,
               display: "grid",
               gridTemplateColumns: "auto 90px 100px",
               alignItems: "center",
+              marginBottom: "-1px",
             }}>
               {/* empty left spacer */}
               <div style={{ padding: "5px 12px" }} />
