@@ -20,6 +20,8 @@ const C = {
   white:    "#ffffff",
 } as const;
 
+const GRADIENT = "linear-gradient(to right, #880000, #ff0d13)";
+
 const FONT = "'Unbounded', Arial, sans-serif";
 
 const PAGE_W  = 794;   // A4 @ 96 dpi
@@ -28,8 +30,8 @@ const PAD     = 40;
 
 const statusColorMap: Record<string, string> = {
   Paid:           "#16a34a",
-  "Partial Paid": C.red,
-  Unpaid:         "#dc2626",
+  "Partial Paid": GRADIENT,
+  Unpaid:         GRADIENT,
 };
 
 // ─── Shared style helpers ─────────────────────────────────────────────────────
@@ -297,12 +299,12 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
               );
             })}
 
-            {/* Totals rows — all cols solid red, no borders */}
+            {/* Totals rows — all cols gradient, no borders */}
             {totalsRows.map(([label, value]) => (
-              <tr key={label} style={{ background: C.red }}>
-                <td style={{ padding: "5px 12px", background: C.red, border: "none" }} />
-                <td style={{ padding: "5px 12px", background: C.red, border: "none" }} />
-                <td style={{ padding: "5px 12px", background: C.red, border: "none" }} />
+              <tr key={label} style={{ background: GRADIENT }}>
+                <td style={{ padding: "5px 12px", background: GRADIENT, border: "none" }} />
+                <td style={{ padding: "5px 12px", background: GRADIENT, border: "none" }} />
+                <td style={{ padding: "5px 12px", background: GRADIENT, border: "none" }} />
                 <td style={{
                   padding: "5px 12px",
                   fontSize: "9px",
@@ -327,10 +329,10 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
             ))}
 
             {/* Balance row */}
-            <tr style={{ background: C.red }}>
-              <td style={{ padding: "10px 12px", background: C.red, border: "none" }} />
-              <td style={{ padding: "10px 12px", background: C.red, border: "none" }} />
-              <td style={{ padding: "10px 12px", background: C.red, border: "none" }} />
+            <tr style={{ background: GRADIENT }}>
+              <td style={{ padding: "10px 12px", background: GRADIENT, border: "none" }} />
+              <td style={{ padding: "10px 12px", background: GRADIENT, border: "none" }} />
+              <td style={{ padding: "10px 12px", background: GRADIENT, border: "none" }} />
               <td style={{
                 padding: "10px 12px",
                 fontSize: "15px",
