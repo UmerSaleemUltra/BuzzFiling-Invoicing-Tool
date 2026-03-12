@@ -302,30 +302,55 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
           </tbody>
         </table>
 
-        {/* Totals block — divs so html2canvas renders gradient correctly */}
+        {/* Totals block — full-width grid divs, gradient on each row div directly */}
         <div style={{ display: "flex", flexDirection: "column" }}>
           {totalsRows.map(([label, value]) => (
             <div key={label} style={{
               background: GRADIENT,
-              display: "flex",
-              justifyContent: "space-between",
+              display: "grid",
+              gridTemplateColumns: "auto 90px 100px",
               alignItems: "center",
-              padding: "5px 12px",
             }}>
-              <span style={{ fontSize: "9px", color: C.white, fontWeight: "400" }}>{label}</span>
-              <span style={{ fontSize: "9.5px", color: C.white, fontWeight: "700" }}>{value}</span>
+              {/* empty left spacer */}
+              <div style={{ padding: "5px 12px" }} />
+              <div style={{
+                padding: "5px 12px",
+                fontSize: "9px",
+                color: C.white,
+                fontWeight: "400",
+                textAlign: "left",
+              }}>{label}</div>
+              <div style={{
+                padding: "5px 12px",
+                fontSize: "9.5px",
+                color: C.white,
+                fontWeight: "700",
+                textAlign: "right",
+              }}>{value}</div>
             </div>
           ))}
           {/* Balance row */}
           <div style={{
             background: GRADIENT,
-            display: "flex",
-            justifyContent: "space-between",
+            display: "grid",
+            gridTemplateColumns: "auto 90px 100px",
             alignItems: "center",
-            padding: "10px 12px",
           }}>
-            <span style={{ fontSize: "15px", fontWeight: "900", color: C.white }}>Balance</span>
-            <span style={{ fontSize: "14px", fontWeight: "900", color: C.white }}>${balance.toFixed(2)}</span>
+            <div style={{ padding: "10px 12px" }} />
+            <div style={{
+              padding: "10px 12px",
+              fontSize: "15px",
+              fontWeight: "900",
+              color: C.white,
+              textAlign: "left",
+            }}>Balance</div>
+            <div style={{
+              padding: "10px 12px",
+              fontSize: "14px",
+              fontWeight: "900",
+              color: C.white,
+              textAlign: "right",
+            }}>${balance.toFixed(2)}</div>
           </div>
         </div>
       </div>
