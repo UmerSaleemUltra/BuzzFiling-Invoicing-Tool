@@ -1,11 +1,6 @@
 export type PaymentStatus = "Paid" | "Partial Paid" | "Unpaid";
 
-export type ServiceType =
-  | "LLC Formation"
-  | "ITIN"
-  | "Registered Agent"
-  | "NM LLC Formation + ITIN"
-  | "Other";
+export type ServiceType = string;
 
 export interface LineItem {
   id: string;

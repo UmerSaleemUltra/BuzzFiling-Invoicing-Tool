@@ -13,12 +13,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  InvoiceData,
-  LineItem,
-  PaymentStatus,
-  ServiceType,
-} from "@/lib/invoice-types";
+import { InvoiceData, LineItem, PaymentStatus } from "@/lib/invoice-types";
 
 interface InvoiceFormProps {
   data: InvoiceData;
@@ -104,6 +99,7 @@ export default function InvoiceForm({
             placeholder="Client full name"
             value={data.billTo}
             onChange={(e) => updateField("billTo", e.target.value)}
+            className="field-input"
           />
         </div>
       </section>
@@ -123,6 +119,7 @@ export default function InvoiceForm({
               onChange={(e) =>
                 updateField("invoiceNumber", parseInt(e.target.value) || 0)
               }
+              className="field-input"
             />
           </div>
           <div className="flex flex-col gap-1.5">
@@ -132,26 +129,19 @@ export default function InvoiceForm({
               type="date"
               value={data.invoiceDate}
               onChange={(e) => updateField("invoiceDate", e.target.value)}
+              className="field-input"
             />
           </div>
         </div>
         <div className="flex flex-col gap-1.5">
-          <Label>Services Type</Label>
-          <Select
+          <Label htmlFor="serviceType">Services Type</Label>
+          <Input
+            id="serviceType"
+            placeholder="e.g. LLC Formation + ITIN"
             value={data.serviceType}
-            onValueChange={(v) => updateField("serviceType", v as ServiceType)}
-          >
-            <SelectTrigger>
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="LLC Formation">LLC Formation</SelectItem>
-              <SelectItem value="ITIN">ITIN</SelectItem>
-              <SelectItem value="Registered Agent">Registered Agent</SelectItem>
-              <SelectItem value="NM LLC Formation + ITIN">NM LLC Formation + ITIN</SelectItem>
-              <SelectItem value="Other">Other</SelectItem>
-            </SelectContent>
-          </Select>
+            onChange={(e) => updateField("serviceType", e.target.value)}
+            className="field-input"
+          />
         </div>
         <div className="flex flex-col gap-1.5">
           <Label htmlFor="invoiceBy">Invoice By</Label>
@@ -160,6 +150,7 @@ export default function InvoiceForm({
             placeholder="Team member name"
             value={data.invoiceBy}
             onChange={(e) => updateField("invoiceBy", e.target.value)}
+            className="field-input"
           />
         </div>
         <div className="flex flex-col gap-1.5">
@@ -170,7 +161,7 @@ export default function InvoiceForm({
               updateField("paymentStatus", v as PaymentStatus)
             }
           >
-            <SelectTrigger>
+            <SelectTrigger className="field-input">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -207,7 +198,7 @@ export default function InvoiceForm({
                 onChange={(e) =>
                   updateLineItem(item.id, "description", e.target.value)
                 }
-                className="text-sm"
+                className="field-input text-sm"
               />
               <Input
                 type="number"
@@ -216,7 +207,7 @@ export default function InvoiceForm({
                 onChange={(e) =>
                   updateLineItem(item.id, "qty", parseFloat(e.target.value) || 0)
                 }
-                className="text-sm text-center px-1"
+                className="field-input text-sm text-center px-1"
               />
               <Input
                 type="number"
@@ -226,7 +217,7 @@ export default function InvoiceForm({
                 onChange={(e) =>
                   updateLineItem(item.id, "rate", parseFloat(e.target.value) || 0)
                 }
-                className="text-sm text-center px-1"
+                className="field-input text-sm text-center px-1"
               />
               <div className="text-sm font-medium text-center text-foreground">
                 ${(item.qty * item.rate).toFixed(2)}
@@ -278,6 +269,7 @@ export default function InvoiceForm({
               onChange={(e) =>
                 updateField("discount", parseFloat(e.target.value) || 0)
               }
+              className="field-input"
             />
           </div>
           <div className="flex flex-col gap-1.5">
@@ -291,6 +283,7 @@ export default function InvoiceForm({
               onChange={(e) =>
                 updateField("paymentReceived", parseFloat(e.target.value) || 0)
               }
+              className="field-input"
             />
           </div>
           <div className="flex flex-col gap-1.5">
@@ -312,7 +305,7 @@ export default function InvoiceForm({
           value={data.paymentTerms}
           onChange={(e) => updateField("paymentTerms", e.target.value)}
           rows={3}
-          className="resize-none text-sm"
+          className="field-input resize-none text-sm"
         />
       </section>
 
