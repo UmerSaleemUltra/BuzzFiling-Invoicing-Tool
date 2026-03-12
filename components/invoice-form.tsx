@@ -80,16 +80,21 @@ export default function InvoiceForm({
   return (
     <div className="flex flex-col gap-6 p-6 h-full overflow-y-auto">
       {/* Header */}
-      <div>
-        <h2 className="text-xl font-bold text-foreground">Invoice Details</h2>
-        <p className="text-sm text-muted-foreground mt-0.5">
+      <div className="pb-2 border-b border-border">
+        <h2
+          className="text-base font-semibold text-foreground tracking-tight"
+          style={{ fontFamily: "var(--font-heading, sans-serif)" }}
+        >
+          Invoice Details
+        </h2>
+        <p className="text-xs text-muted-foreground mt-1">
           Fill in the fields — preview updates live
         </p>
       </div>
 
       {/* Client Info */}
       <section className="flex flex-col gap-3">
-        <h3 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground border-b border-border pb-1">
+        <h3 className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground/70">
           Client Info
         </h3>
         <div className="flex flex-col gap-1.5">
@@ -105,7 +110,7 @@ export default function InvoiceForm({
 
       {/* Invoice Meta */}
       <section className="flex flex-col gap-3">
-        <h3 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground border-b border-border pb-1">
+        <h3 className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground/70">
           Invoice Meta
         </h3>
         <div className="grid grid-cols-2 gap-3">
@@ -179,7 +184,7 @@ export default function InvoiceForm({
 
       {/* Line Items */}
       <section className="flex flex-col gap-3">
-        <h3 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground border-b border-border pb-1">
+        <h3 className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground/70">
           Line Items
         </h3>
         <div className="flex flex-col gap-2">
@@ -252,7 +257,7 @@ export default function InvoiceForm({
 
       {/* Pricing */}
       <section className="flex flex-col gap-3">
-        <h3 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground border-b border-border pb-1">
+        <h3 className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground/70">
           Pricing
         </h3>
         <div className="grid grid-cols-2 gap-3">
@@ -299,7 +304,7 @@ export default function InvoiceForm({
 
       {/* Payment Terms */}
       <section className="flex flex-col gap-3">
-        <h3 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground border-b border-border pb-1">
+        <h3 className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground/70">
           Payment Terms
         </h3>
         <Textarea

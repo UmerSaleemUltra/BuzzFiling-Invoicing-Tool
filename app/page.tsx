@@ -138,24 +138,15 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       {/* App Bar */}
-      <header
-        className="flex items-center gap-3 px-6 py-3 border-b border-border"
-        style={{ background: "#111" }}
-      >
+      <header className="flex items-center justify-between px-6 py-3 bg-card border-b border-border">
+        <img
+          src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/images-SdNz6vfYoJoMVJMUFtXCjHac5xozpZ.png"
+          alt="Buzz Filing"
+          className="h-9 w-auto object-contain"
+        />
         <span
-          style={{
-            color: "#cc1f1f",
-            fontWeight: "900",
-            fontSize: "20px",
-            letterSpacing: "2px",
-            fontFamily: "Arial Black, Arial, sans-serif",
-          }}
-        >
-          BUZZ FILING
-        </span>
-        <span
-          className="text-sm font-medium"
-          style={{ color: "#888", borderLeft: "1px solid #333", paddingLeft: "12px" }}
+          className="text-xs font-semibold tracking-widest uppercase text-muted-foreground"
+          style={{ fontFamily: "var(--font-heading, sans-serif)" }}
         >
           Invoice Generator
         </span>
@@ -164,7 +155,7 @@ export default function Home() {
       {/* Main two-panel layout */}
       <main className="flex flex-1 overflow-hidden flex-col lg:flex-row">
         {/* Left: Form Panel */}
-        <aside className="w-full lg:w-[380px] xl:w-[420px] flex-shrink-0 border-b lg:border-b-0 lg:border-r border-border bg-card overflow-y-auto max-h-[50vh] lg:max-h-none">
+        <aside className="w-full lg:w-[400px] xl:w-[440px] flex-shrink-0 border-b lg:border-b-0 lg:border-r border-border bg-card overflow-y-auto max-h-[50vh] lg:max-h-none shadow-sm">
           <InvoiceForm
             data={invoiceData}
             setData={setInvoiceData}
