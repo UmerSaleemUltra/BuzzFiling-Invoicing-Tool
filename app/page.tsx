@@ -6,6 +6,7 @@ import InvoicePreview from "@/components/invoice-preview";
 import { InvoiceData, DEFAULT_INVOICE } from "@/lib/invoice-types";
 
 const INVOICE_NUMBER_KEY = "buzz_filing_invoice_number";
+const FORM_DATA_KEY = "buzz_filing_form_data";
 
 function getNextInvoiceNumber(): number {
   if (typeof window === "undefined") return 2869;
@@ -19,6 +20,22 @@ function saveInvoiceNumber(n: number) {
   }
 }
 
+function loadFormData(): InvoiceData | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = localStorage.getItem(FORM_DATA_KEY);
+    return raw ? (JSON.parse(raw) as InvoiceData) : null;
+  } catch {
+    return null;
+  }
+}
+
+function saveFormData(data: InvoiceData) {
+  if (typeof window !== "undefined") {
+    localStorage.setItem(FORM_DATA_KEY, JSON.stringify(data));
+  }
+}
+
 export default function Home() {
   const [invoiceData, setInvoiceData] = useState<InvoiceData>(() => ({
     ...DEFAULT_INVOICE,
@@ -29,11 +46,25 @@ export default function Home() {
   const [fileName, setFileName] = useState("");
   const previewRef = useRef<HTMLDivElement>(null);
 
+  // Restore saved form data on mount, falling back to defaults
   useEffect(() => {
+    const saved = loadFormData();
     const num = getNextInvoiceNumber();
-    setInvoiceData((prev) => ({ ...prev, invoiceNumber: num }));
+    if (saved) {
+      // Always sync invoice number from dedicated key so it stays consistent
+      setInvoiceData({ ...saved, invoiceNumber: num });
+    } else {
+      setInvoiceData((prev) => ({ ...prev, invoiceNumber: num }));
+    }
     setMounted(true);
   }, []);
+
+  // Auto-save form data to localStorage whenever it changes
+  useEffect(() => {
+    if (mounted) {
+      saveFormData(invoiceData);
+    }
+  }, [invoiceData, mounted]);
 
   const handleDownload = useCallback(async () => {
     if (!invoiceData.billTo.trim()) {
@@ -121,7 +152,7 @@ export default function Home() {
 
   const handleReset = useCallback(() => {
     const nextNum = getNextInvoiceNumber();
-    setInvoiceData({
+    const fresh: InvoiceData = {
       ...DEFAULT_INVOICE,
       invoiceNumber: nextNum,
       lineItems: [
@@ -132,7 +163,12 @@ export default function Home() {
           rate: 0,
         },
       ],
-    });
+    };
+    setInvoiceData(fresh);
+    // Clear persisted data so the blank form is saved
+    if (typeof window !== "undefined") {
+      localStorage.removeItem(FORM_DATA_KEY);
+    }
   }, []);
 
   if (!mounted) return null;
