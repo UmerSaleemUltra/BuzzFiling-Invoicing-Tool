@@ -151,8 +151,6 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
           ))}
         </p>
 
-        {/* Divider */}
-        <hr style={{ border: "none", borderTop: `1px solid ${C.border}`, margin: 0 }} />
       </header>
 
       {/* ── TITLE ─────────────────────────────────────────────────────────── */}
@@ -162,95 +160,126 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
       </div>
 
       {/* ── META ROW ──────────────────────────────────────────────────────── */}
-      <div style={{
-        padding: `14px ${PAD}px 14px`,
-        display: "grid",
-        gridTemplateColumns: "220px 1fr 180px",
-        gap: "0",
-        alignItems: "stretch",
+      <table style={{
+        width: "100%",
+        borderCollapse: "collapse",
+        tableLayout: "fixed",
+        margin: `14px 0`,
+        paddingLeft: `${PAD}px`,
+        paddingRight: `${PAD}px`,
       }}>
+        <colgroup>
+          <col style={{ width: `${PAD}px` }} />
+          <col style={{ width: "200px" }} />
+          <col />
+          <col style={{ width: "180px" }} />
+          <col style={{ width: `${PAD}px` }} />
+        </colgroup>
+        <tbody>
+          <tr>
+            {/* left padding cell */}
+            <td />
 
-        {/* ── Bill To ── */}
-        <div>
-          <div style={{
-            fontSize: "7.5px",
-            fontWeight: "700",
-            textTransform: "uppercase",
-            letterSpacing: "0.8px",
-            color: C.black,
-            marginBottom: "4px",
-          }}>
-            BILL TO
-          </div>
-          <div style={{
-            fontSize: "9.5px",
-            fontWeight: "600",
-            color: C.black,
-            lineHeight: 1.5,
-          }}>
-            {data.billTo || "—"}
-          </div>
-        </div>
+            {/* ── Bill To ── */}
+            <td style={{ verticalAlign: "top", paddingTop: "14px", paddingBottom: "14px" }}>
+              <div style={{
+                fontSize: "7.5px",
+                fontWeight: "700",
+                textTransform: "uppercase",
+                letterSpacing: "0.8px",
+                color: C.black,
+                marginBottom: "4px",
+              }}>
+                BILL TO
+              </div>
+              <div style={{
+                fontSize: "9.5px",
+                fontWeight: "600",
+                color: C.black,
+                lineHeight: 1.5,
+              }}>
+                {data.billTo || "—"}
+              </div>
+            </td>
 
-        {/* ── Invoice fields ── */}
-        <table style={{ borderCollapse: "collapse", fontSize: "9px" }}>
-          <tbody>
-            {metaRows.map(([label, value, bold]) => (
-              <tr key={label}>
-                <td style={{
-                  fontSize: "7.5px",
-                  fontWeight: "700",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.6px",
-                  color: C.black,
-                  padding: "2.5px 16px 2.5px 0",
-                  whiteSpace: "nowrap",
-                  verticalAlign: "top",
-                }}>
-                  {label}
-                </td>
-                <td style={{
-                  fontSize: "9.5px",
-                  fontWeight: bold ? "700" : "400",
-                  color: C.black,
-                  padding: "2.5px 0",
-                  verticalAlign: "top",
-                }}>
-                  {value}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+            {/* ── Invoice fields ── */}
+            <td style={{ verticalAlign: "top", paddingTop: "14px", paddingBottom: "14px" }}>
+              <table style={{ borderCollapse: "collapse", width: "100%" }}>
+                <colgroup>
+                  <col style={{ width: "130px" }} />
+                  <col />
+                </colgroup>
+                <tbody>
+                  {metaRows.map(([label, value, bold]) => (
+                    <tr key={label}>
+                      <td style={{
+                        fontSize: "7.5px",
+                        fontWeight: "700",
+                        textTransform: "uppercase",
+                        letterSpacing: "0.6px",
+                        color: C.black,
+                        padding: "4px 16px 4px 0",
+                        whiteSpace: "nowrap",
+                        verticalAlign: "middle",
+                      }}>
+                        {label}
+                      </td>
+                      <td style={{
+                        fontSize: "9.5px",
+                        fontWeight: bold ? "700" : "400",
+                        color: C.black,
+                        padding: "4px 0",
+                        verticalAlign: "middle",
+                      }}>
+                        {value}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </td>
 
-        {/* ── Payment Status ── */}
-        <div style={{ display: "block" }}>
-          <div style={{
-            background: statusBg,
-            color: C.white,
-            fontWeight: "700",
-            fontSize: "13px",
-            letterSpacing: "0.3px",
-            textAlign: "center",
-            padding: "14px 8px",
-          }}>
-            Payment Status
-          </div>
-          <div style={{
-            border: `1px solid ${C.border}`,
-            borderTop: "none",
-            fontWeight: "700",
-            fontSize: "14px",
-            color: C.black,
-            background: "#f5f5f5",
-            textAlign: "center",
-            padding: "14px 8px",
-          }}>
-            {data.paymentStatus}
-          </div>
-        </div>
+            {/* ── Payment Status ── */}
+            <td style={{ verticalAlign: "top", paddingTop: "14px", paddingBottom: "14px" }}>
+              <table style={{ borderCollapse: "collapse", width: "100%" }}>
+                <tbody>
+                  <tr>
+                    <td style={{
+                      background: statusBg,
+                      color: C.white,
+                      fontWeight: "700",
+                      fontSize: "13px",
+                      letterSpacing: "0.3px",
+                      textAlign: "center",
+                      verticalAlign: "middle",
+                      padding: "14px 8px",
+                    }}>
+                      Payment Status
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style={{
+                      border: `1px solid ${C.border}`,
+                      fontWeight: "700",
+                      fontSize: "14px",
+                      color: C.black,
+                      background: "#f5f5f5",
+                      textAlign: "center",
+                      verticalAlign: "middle",
+                      padding: "14px 8px",
+                    }}>
+                      {data.paymentStatus}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
 
-      </div>
+            {/* right padding cell */}
+            <td />
+          </tr>
+        </tbody>
+      </table>
 
       {/* ── LINE ITEMS + TOTALS (unified table) ──────────────────────────── */}
       <div style={{ padding: `36px ${PAD}px 0` }}>
