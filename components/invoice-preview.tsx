@@ -231,10 +231,8 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
             fontWeight: "700",
             fontSize: "13px",
             letterSpacing: "0.3px",
-            height: "44px",
-            lineHeight: "44px",
             textAlign: "center",
-            overflow: "hidden",
+            padding: "14px 8px",
           }}>
             Payment Status
           </div>
@@ -245,10 +243,8 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
             fontSize: "14px",
             color: C.black,
             background: "#f5f5f5",
-            height: "44px",
-            lineHeight: "44px",
             textAlign: "center",
-            overflow: "hidden",
+            padding: "14px 8px",
           }}>
             {data.paymentStatus}
           </div>
