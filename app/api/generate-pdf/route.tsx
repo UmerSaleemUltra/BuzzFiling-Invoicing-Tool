@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import ReactPDF, {
+import {
+  renderToBuffer,
   Document,
   Page,
   View,
@@ -296,7 +297,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { data, fileName } = body as { data: InvoiceData; fileName: string };
 
-    const pdfBuffer = await ReactPDF.renderToBuffer(<InvoicePDF data={data} />);
+    const pdfBuffer = await renderToBuffer(<InvoicePDF data={data} />);
 
     return new NextResponse(pdfBuffer, {
       status: 200,
