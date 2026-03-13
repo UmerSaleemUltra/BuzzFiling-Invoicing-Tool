@@ -39,7 +39,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`font-sans antialiased ${_unbounded.variable}`} style={{ fontFamily: "var(--font-sans, sans-serif)" }}>
+      <body suppressHydrationWarning className={`font-sans antialiased ${_unbounded.variable}`} style={{ fontFamily: "var(--font-sans, sans-serif)" }}>
         {children}
         <Analytics />
       </body>
