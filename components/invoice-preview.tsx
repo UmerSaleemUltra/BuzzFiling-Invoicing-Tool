@@ -253,7 +253,7 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
       </div>
 
       {/* ── LINE ITEMS + TOTALS (unified table) ──────────────────────────── */}
-      <div style={{ padding: `18px ${PAD}px 0` }}>
+      <div style={{ padding: `36px ${PAD}px 0` }}>
         <table style={{ width: "100%", borderCollapse: "collapse", borderSpacing: 0, fontSize: "9.5px" }}>
 
           {/* Column widths */}
