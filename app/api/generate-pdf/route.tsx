@@ -167,7 +167,7 @@ export async function POST(req: NextRequest) {
         React.createElement(
           View, { style: s.header },
           React.createElement(Image, {
-            src: "https://enipxgoxowbcpr7x.public.blob.vercel-storage.com/Logo%20in%20white%20bg%20SVG.svg",
+            src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Logo%20in%20white%20bg%20Png-zmjaho0wEkJAFnEvlbvwIEmIFSMfrW.png",
             style: s.logo,
           }),
           React.createElement(Text, { style: s.addressLine }, COMPANY_INFO.address),
