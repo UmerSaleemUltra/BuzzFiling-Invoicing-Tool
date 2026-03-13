@@ -124,7 +124,7 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
         {/* Logo — 150px, no bottom gap */}
         <div style={{ marginBottom: "0px" }}>
           <img
-            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Logo%20in%20white%20bg%20Png-zmjaho0wEkJAFnEvlbvwIEmIFSMfrW.png"
+            src="https://enipxgoxowbcpr7x.public.blob.vercel-storage.com/Logo%20in%20white%20bg%20SVG.svg"
             alt="Buzz Filing"
             crossOrigin="anonymous"
             style={{ height: "120px", width: "auto", objectFit: "contain", display: "inline-block" }}
