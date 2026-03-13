@@ -76,74 +76,71 @@ export default function Home() {
     const el = document.getElementById("invoice-preview");
     if (!el) return;
 
-    const html2canvas = (await import("html2canvas")).default;
-    const { jsPDF } = await import("jspdf");
+    // Collect all stylesheets from the page so Puppeteer renders identically
+    const styleSheets = Array.from(document.styleSheets)
+      .map((sheet) => {
+        try {
+          return Array.from(sheet.cssRules)
+            .map((rule) => rule.cssText)
+            .join("\n");
+        } catch {
+          // cross-origin sheet — link it by href instead
+          return sheet.href
+            ? `@import url("${sheet.href}");`
+            : "";
+        }
+      })
+      .join("\n");
 
-    const canvas = await html2canvas(el, {
-      scale: 5.67,
-      useCORS: true,
-      backgroundColor: "#ffffff",
-      logging: false,
-      imageTimeout: 0,
-      removeContainer: true,
-      onclone: (clonedDoc) => {
-        const root = clonedDoc.documentElement;
-        const hexOverrides: Record<string, string> = {
-          "--background": "#f9f9fb",
-          "--foreground": "#0d0f1a",
-          "--card": "#ffffff",
-          "--card-foreground": "#0d0f1a",
-          "--popover": "#ffffff",
-          "--popover-foreground": "#0d0f1a",
-          "--primary": "#ff0d13",
-          "--primary-dark": "#cc0a0f",
-          "--primary-foreground": "#ffffff",
-          "--secondary": "#f3f4f6",
-          "--secondary-foreground": "#0d0f1a",
-          "--muted": "#f3f4f6",
-          "--muted-foreground": "#6b7280",
-          "--accent": "#ff0d13",
-          "--accent-foreground": "#ffffff",
-          "--destructive": "#ff0d13",
-          "--destructive-foreground": "#ffffff",
-          "--border": "#e5e7eb",
-          "--input": "#e5e7eb",
-          "--ring": "#ff0d13",
-        };
-        Object.entries(hexOverrides).forEach(([prop, value]) => {
-          root.style.setProperty(prop, value);
-        });
-      },
-    });
-
-    const A4_W = 210;
-    const A4_H = 297;
-
-    // Use a second canvas to compress: draw at 96% quality into an offscreen canvas
-    // then export as JPEG at high quality — sharp text, smaller file than PNG
-    const offscreen = document.createElement("canvas");
-    offscreen.width  = canvas.width;
-    offscreen.height = canvas.height;
-    const ctx = offscreen.getContext("2d")!;
-    ctx.fillStyle = "#ffffff";
-    ctx.fillRect(0, 0, offscreen.width, offscreen.height);
-    ctx.drawImage(canvas, 0, 0);
-    const imgData = offscreen.toDataURL("image/jpeg", 0.78);
-
-    const pdf = new jsPDF({
-      orientation: "portrait",
-      unit: "mm",
-      format: "a4",
-    });
-
-    // Always fill the full A4 page — one page only
-    pdf.addImage(imgData, "JPEG", 0, 0, A4_W, A4_H, undefined, "FAST");
+    const html = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #ffffff; font-family: 'Unbounded', Arial, sans-serif; }
+    ${styleSheets}
+  </style>
+</head>
+<body>
+  ${el.outerHTML}
+</body>
+</html>`;
 
     const defaultName = `Invoice-${invoiceData.invoiceNumber}-${invoiceData.billTo.replace(/\s+/g, "-")}`;
-    const resolvedName = fileName.trim() ? fileName.trim().replace(/\.pdf$/i, "") : defaultName;
-    pdf.save(`${resolvedName}.pdf`);
+    const resolvedName = fileName.trim()
+      ? fileName.trim().replace(/\.pdf$/i, "")
+      : defaultName;
 
-    saveInvoiceNumber(invoiceData.invoiceNumber + 1);
+    try {
+      const res = await fetch("/api/generate-pdf", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ html, fileName: resolvedName }),
+      });
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        alert(`PDF generation failed: ${err.detail || res.statusText}`);
+        return;
+      }
+
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${resolvedName}.pdf`;
+      a.click();
+      URL.revokeObjectURL(url);
+
+      saveInvoiceNumber(invoiceData.invoiceNumber + 1);
+    } catch (err) {
+      console.error("[handleDownload] error:", err);
+      alert("PDF generation failed. Please try again.");
+    }
   }, [invoiceData, fileName]);
 
   const handleReset = useCallback(() => {
