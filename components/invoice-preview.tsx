@@ -162,117 +162,108 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
       </div>
 
       {/* ── META ROW ──────────────────────────────────────────────────────── */}
-      <table style={{
-        width: "100%",
-        borderCollapse: "collapse",
-        padding: `14px ${PAD}px`,
-        display: "table",
-        tableLayout: "fixed",
+      <div style={{
+        padding: `14px ${PAD}px 14px`,
+        display: "grid",
+        gridTemplateColumns: "220px 1fr 180px",
+        gap: "0",
+        alignItems: "stretch",
       }}>
-        <colgroup>
-          <col style={{ width: "220px" }} />
-          <col />
-          <col style={{ width: "180px" }} />
-        </colgroup>
-        <tbody>
-          <tr>
-            {/* ── Bill To ── */}
-            <td style={{ verticalAlign: "top", padding: `14px ${PAD}px 14px 0` }}>
-              <div style={{
-                fontSize: "7.5px",
+
+        {/* ── Bill To ── */}
+        <div>
+          <div style={{
+            fontSize: "7.5px",
+            fontWeight: "700",
+            textTransform: "uppercase",
+            letterSpacing: "0.8px",
+            color: C.black,
+            marginBottom: "4px",
+          }}>
+            BILL TO
+          </div>
+          <div style={{
+            fontSize: "9.5px",
+            fontWeight: "600",
+            color: C.black,
+            lineHeight: 1.5,
+          }}>
+            {data.billTo || "—"}
+          </div>
+        </div>
+
+        {/* ── Invoice fields ── */}
+        <table style={{ borderCollapse: "collapse", fontSize: "9px", tableLayout: "fixed" }}>
+          <colgroup>
+            <col style={{ width: "120px" }} />
+            <col style={{ width: "auto" }} />
+          </colgroup>
+          <tbody>
+            {metaRows.map(([label, value, bold]) => (
+              <tr key={label}>
+                <td style={{
+                  fontSize: "7.5px",
+                  fontWeight: "700",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.6px",
+                  color: C.black,
+                  padding: "4px 16px 4px 0",
+                  whiteSpace: "nowrap",
+                  verticalAlign: "middle",
+                }}>
+                  {label}
+                </td>
+                <td style={{
+                  fontSize: "9.5px",
+                  fontWeight: bold ? "700" : "400",
+                  color: C.black,
+                  padding: "4px 0",
+                  verticalAlign: "middle",
+                }}>
+                  {value}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        {/* ── Payment Status ── */}
+        <table style={{ borderCollapse: "collapse", width: "100%", height: "100%" }}>
+          <tbody>
+            <tr>
+              <td style={{
+                background: statusBg,
+                color: C.white,
                 fontWeight: "700",
-                textTransform: "uppercase",
-                letterSpacing: "0.8px",
-                color: C.black,
-                marginBottom: "4px",
+                fontSize: "13px",
+                letterSpacing: "0.3px",
+                textAlign: "center",
+                verticalAlign: "middle",
+                padding: "12px 8px",
+                width: "100%",
               }}>
-                BILL TO
-              </div>
-              <div style={{
-                fontSize: "9.5px",
-                fontWeight: "600",
+                Payment Status
+              </td>
+            </tr>
+            <tr>
+              <td style={{
+                border: `1px solid ${C.border}`,
+                fontWeight: "700",
+                fontSize: "14px",
                 color: C.black,
-                lineHeight: 1.5,
+                background: "#f5f5f5",
+                textAlign: "center",
+                verticalAlign: "middle",
+                padding: "12px 8px",
+                width: "100%",
               }}>
-                {data.billTo || "—"}
-              </div>
-            </td>
+                {data.paymentStatus}
+              </td>
+            </tr>
+          </tbody>
+        </table>
 
-            {/* ── Invoice fields ── */}
-            <td style={{ verticalAlign: "top", padding: "14px 0" }}>
-              <table style={{ borderCollapse: "collapse", fontSize: "9px", width: "100%" }}>
-                <colgroup>
-                  <col style={{ width: "120px" }} />
-                  <col />
-                </colgroup>
-                <tbody>
-                  {metaRows.map(([label, value, bold]) => (
-                    <tr key={label}>
-                      <td style={{
-                        fontSize: "7.5px",
-                        fontWeight: "700",
-                        textTransform: "uppercase",
-                        letterSpacing: "0.6px",
-                        color: C.black,
-                        padding: "4px 16px 4px 0",
-                        whiteSpace: "nowrap",
-                        verticalAlign: "middle",
-                      }}>
-                        {label}
-                      </td>
-                      <td style={{
-                        fontSize: "9.5px",
-                        fontWeight: bold ? "700" : "400",
-                        color: C.black,
-                        padding: "4px 0",
-                        verticalAlign: "middle",
-                      }}>
-                        {value}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </td>
-
-            {/* ── Payment Status ── */}
-            <td style={{ verticalAlign: "top", padding: "14px 0 14px 12px" }}>
-              <table style={{ borderCollapse: "collapse", width: "100%" }}>
-                <tbody>
-                  <tr>
-                    <td style={{
-                      background: statusBg,
-                      color: C.white,
-                      fontWeight: "700",
-                      fontSize: "13px",
-                      letterSpacing: "0.3px",
-                      textAlign: "center",
-                      verticalAlign: "middle",
-                      padding: "12px 8px",
-                    }}>
-                      Payment Status
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style={{
-                      border: `1px solid ${C.border}`,
-                      fontWeight: "700",
-                      fontSize: "14px",
-                      color: C.black,
-                      background: "#f5f5f5",
-                      textAlign: "center",
-                      verticalAlign: "middle",
-                      padding: "12px 8px",
-                    }}>
-                      {data.paymentStatus}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      </div>
 
       {/* ── LINE ITEMS + TOTALS (unified table) ──────────────────────────── */}
       <div style={{ padding: `18px ${PAD}px 0` }}>
@@ -324,61 +315,56 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
           </tbody>
         </table>
 
-        {/* Totals block — table so html2canvas renders background + layout correctly */}
-        <table style={{ width: "100%", borderCollapse: "collapse" }}>
-          <colgroup>
-            <col />
-            <col style={{ width: "90px" }} />
-            <col style={{ width: "100px" }} />
-          </colgroup>
-          <tbody>
-            {totalsRows.map(([label, value]) => (
-              <tr key={label}>
-                <td style={{ background: BRAND, padding: "5px 12px" }} />
-                <td style={{
-                  background: BRAND,
-                  padding: "5px 12px",
-                  fontSize: "9px",
-                  color: C.white,
-                  fontWeight: "400",
-                  textAlign: "left",
-                  verticalAlign: "middle",
-                }}>{label}</td>
-                <td style={{
-                  background: BRAND,
-                  padding: "5px 12px",
-                  fontSize: "9.5px",
-                  color: C.white,
-                  fontWeight: "700",
-                  textAlign: "right",
-                  verticalAlign: "middle",
-                }}>{value}</td>
-              </tr>
-            ))}
-            {/* Balance row */}
-            <tr>
-              <td style={{ background: BRAND, padding: "10px 12px" }} />
-              <td style={{
-                background: BRAND,
-                padding: "10px 12px",
-                fontSize: "15px",
-                fontWeight: "900",
+        {/* Totals block — single gradient wrapper, rows transparent */}
+        <div style={{ background: BRAND, display: "flex", flexDirection: "column" }}>
+          {totalsRows.map(([label, value]) => (
+            <div key={label} style={{
+              background: "transparent",
+              display: "grid",
+              gridTemplateColumns: "auto 90px 100px",
+              alignItems: "center",
+            }}>
+              <div style={{ padding: "5px 12px" }} />
+              <div style={{
+                padding: "5px 12px",
+                fontSize: "9px",
                 color: C.white,
+                fontWeight: "400",
                 textAlign: "left",
-                verticalAlign: "middle",
-              }}>Balance</td>
-              <td style={{
-                background: BRAND,
-                padding: "10px 12px",
-                fontSize: "14px",
-                fontWeight: "900",
+              }}>{label}</div>
+              <div style={{
+                padding: "5px 12px",
+                fontSize: "9.5px",
                 color: C.white,
+                fontWeight: "700",
                 textAlign: "right",
-                verticalAlign: "middle",
-              }}>${balance.toFixed(2)}</td>
-            </tr>
-          </tbody>
-        </table>
+              }}>{value}</div>
+            </div>
+          ))}
+          {/* Balance row */}
+          <div style={{
+            background: "transparent",
+            display: "grid",
+            gridTemplateColumns: "auto 90px 100px",
+            alignItems: "center",
+          }}>
+            <div style={{ padding: "10px 12px" }} />
+            <div style={{
+              padding: "10px 12px",
+              fontSize: "15px",
+              fontWeight: "900",
+              color: C.white,
+              textAlign: "left",
+            }}>Balance</div>
+            <div style={{
+              padding: "10px 12px",
+              fontSize: "14px",
+              fontWeight: "900",
+              color: C.white,
+              textAlign: "right",
+            }}>${balance.toFixed(2)}</div>
+          </div>
+        </div>
       </div>
 
       {/* ── THANK YOU ─────────────────────────────────────────────────────── */}
