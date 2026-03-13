@@ -124,7 +124,7 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
         {/* Logo — 150px, no bottom gap */}
         <div style={{ marginBottom: "0px" }}>
           <img
-            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-gRxKEWIH261PwsWA62vZ027l54RJEl.png"
+            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/images-G1AmblSQK7dZoDxTk5QwyOw4Ylv3hh.png"
             alt="Buzz Filing"
             crossOrigin="anonymous"
             style={{ height: "150px", width: "auto", objectFit: "contain", display: "inline-block" }}
@@ -271,7 +271,7 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
 
           {/* Header */}
           <thead>
-            <tr style={{ background: C.headerBg }}>
+            <tr style={{ background: "transparent" }}>
               <th style={thStyle({ textAlign: "left",   padding: "9px 12px" })}>DESCRIPTION</th>
               <th style={thStyle({ padding: "9px 12px" })} />
               <th style={thStyle({ textAlign: "center", padding: "9px 12px" })}>QTY</th>
