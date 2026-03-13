@@ -76,71 +76,43 @@ export default function Home() {
     const el = document.getElementById("invoice-preview");
     if (!el) return;
 
-    // Collect all stylesheets from the page so Puppeteer renders identically
-    const styleSheets = Array.from(document.styleSheets)
-      .map((sheet) => {
-        try {
-          return Array.from(sheet.cssRules)
-            .map((rule) => rule.cssText)
-            .join("\n");
-        } catch {
-          // cross-origin sheet — link it by href instead
-          return sheet.href
-            ? `@import url("${sheet.href}");`
-            : "";
-        }
-      })
-      .join("\n");
+    const html2canvas = (await import("html2canvas")).default;
+    const { jsPDF } = await import("jspdf");
 
-    const html = `<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: #ffffff; font-family: 'Unbounded', Arial, sans-serif; }
-    ${styleSheets}
-  </style>
-</head>
-<body>
-  ${el.outerHTML}
-</body>
-</html>`;
+    const canvas = await html2canvas(el, {
+      scale: 5.67,
+      useCORS: true,
+      backgroundColor: "#ffffff",
+      logging: false,
+      imageTimeout: 0,
+      removeContainer: true,
+    });
+
+    const A4_W = 210;
+    const A4_H = 297;
+
+    const offscreen = document.createElement("canvas");
+    offscreen.width  = canvas.width;
+    offscreen.height = canvas.height;
+    const ctx = offscreen.getContext("2d")!;
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, offscreen.width, offscreen.height);
+    ctx.drawImage(canvas, 0, 0);
+    const imgData = offscreen.toDataURL("image/jpeg", 0.92);
+
+    const pdf = new jsPDF({
+      orientation: "portrait",
+      unit: "mm",
+      format: "a4",
+    });
+
+    pdf.addImage(imgData, "JPEG", 0, 0, A4_W, A4_H, undefined, "FAST");
 
     const defaultName = `Invoice-${invoiceData.invoiceNumber}-${invoiceData.billTo.replace(/\s+/g, "-")}`;
-    const resolvedName = fileName.trim()
-      ? fileName.trim().replace(/\.pdf$/i, "")
-      : defaultName;
+    const resolvedName = fileName.trim() ? fileName.trim().replace(/\.pdf$/i, "") : defaultName;
+    pdf.save(`${resolvedName}.pdf`);
 
-    try {
-      const res = await fetch("/api/generate-pdf", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ html, fileName: resolvedName }),
-      });
-
-      if (!res.ok) {
-        const err = await res.json().catch(() => ({}));
-        alert(`PDF generation failed: ${err.detail || res.statusText}`);
-        return;
-      }
-
-      const blob = await res.blob();
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `${resolvedName}.pdf`;
-      a.click();
-      URL.revokeObjectURL(url);
-
-      saveInvoiceNumber(invoiceData.invoiceNumber + 1);
-    } catch (err) {
-      console.error("[handleDownload] error:", err);
-      alert("PDF generation failed. Please try again.");
-    }
+    saveInvoiceNumber(invoiceData.invoiceNumber + 1);
   }, [invoiceData, fileName]);
 
   const handleReset = useCallback(() => {
