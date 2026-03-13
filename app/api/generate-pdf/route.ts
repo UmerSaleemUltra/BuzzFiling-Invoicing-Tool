@@ -19,11 +19,10 @@ export async function POST(req: NextRequest) {
     let launchArgs: string[];
 
     try {
-      // Serverless (Vercel) — use @sparticuz/chromium-min binary
-      const chromiumPkg = await import("@sparticuz/chromium-min");
-      executablePath = await chromiumPkg.default.executablePath(
-        "https://github.com/Sparticuz/chromium/releases/download/v123.0.0/chromium-v123.0.0-pack.tar"
-      );
+      // Serverless — use @sparticuz/chromium (full, bundles all system libs)
+      const chromiumPkg = await import("@sparticuz/chromium");
+      chromiumPkg.default.setGraphicsMode = false;
+      executablePath = await chromiumPkg.default.executablePath();
       launchArgs = chromiumPkg.default.args;
     } catch {
       // Local dev — use system Chrome
