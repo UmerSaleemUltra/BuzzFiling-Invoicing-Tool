@@ -193,7 +193,11 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
         </div>
 
         {/* ── Invoice fields ── */}
-        <table style={{ borderCollapse: "collapse", fontSize: "9px" }}>
+        <table style={{ borderCollapse: "collapse", fontSize: "9px", tableLayout: "fixed" }}>
+          <colgroup>
+            <col style={{ width: "120px" }} />
+            <col style={{ width: "auto" }} />
+          </colgroup>
           <tbody>
             {metaRows.map(([label, value, bold]) => (
               <tr key={label}>
@@ -203,9 +207,9 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
                   textTransform: "uppercase",
                   letterSpacing: "0.6px",
                   color: C.black,
-                  padding: "2.5px 16px 2.5px 0",
+                  padding: "4px 16px 4px 0",
                   whiteSpace: "nowrap",
-                  verticalAlign: "top",
+                  verticalAlign: "middle",
                 }}>
                   {label}
                 </td>
@@ -213,8 +217,8 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
                   fontSize: "9.5px",
                   fontWeight: bold ? "700" : "400",
                   color: C.black,
-                  padding: "2.5px 0",
-                  verticalAlign: "top",
+                  padding: "4px 0",
+                  verticalAlign: "middle",
                 }}>
                   {value}
                 </td>
@@ -224,31 +228,40 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
         </table>
 
         {/* ── Payment Status ── */}
-        <div style={{ display: "block" }}>
-          <div style={{
-            background: statusBg,
-            color: C.white,
-            fontWeight: "700",
-            fontSize: "13px",
-            letterSpacing: "0.3px",
-            textAlign: "center",
-            padding: "14px 8px",
-          }}>
-            Payment Status
-          </div>
-          <div style={{
-            border: `1px solid ${C.border}`,
-            borderTop: "none",
-            fontWeight: "700",
-            fontSize: "14px",
-            color: C.black,
-            background: "#f5f5f5",
-            textAlign: "center",
-            padding: "14px 8px",
-          }}>
-            {data.paymentStatus}
-          </div>
-        </div>
+        <table style={{ borderCollapse: "collapse", width: "100%", height: "100%" }}>
+          <tbody>
+            <tr>
+              <td style={{
+                background: statusBg,
+                color: C.white,
+                fontWeight: "700",
+                fontSize: "13px",
+                letterSpacing: "0.3px",
+                textAlign: "center",
+                verticalAlign: "middle",
+                padding: "12px 8px",
+                width: "100%",
+              }}>
+                Payment Status
+              </td>
+            </tr>
+            <tr>
+              <td style={{
+                border: `1px solid ${C.border}`,
+                fontWeight: "700",
+                fontSize: "14px",
+                color: C.black,
+                background: "#f5f5f5",
+                textAlign: "center",
+                verticalAlign: "middle",
+                padding: "12px 8px",
+                width: "100%",
+              }}>
+                {data.paymentStatus}
+              </td>
+            </tr>
+          </tbody>
+        </table>
 
       </div>
 
