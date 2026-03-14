@@ -87,22 +87,6 @@ export default function Home() {
       imageTimeout: 0,
       removeContainer: true,
       onclone: (clonedDoc) => {
-        // Lock Payment Status box to fixed compact height in PDF only
-        const psHeader = clonedDoc.querySelector<HTMLElement>(".ps-header");
-        const psValue  = clonedDoc.querySelector<HTMLElement>(".ps-value");
-        if (psHeader) {
-          psHeader.style.padding    = "0";
-          psHeader.style.height     = "44px";
-          psHeader.style.lineHeight = "44px";
-          psHeader.style.overflow   = "hidden";
-        }
-        if (psValue) {
-          psValue.style.padding    = "0";
-          psValue.style.height     = "44px";
-          psValue.style.lineHeight = "44px";
-          psValue.style.overflow   = "hidden";
-        }
-
         const root = clonedDoc.documentElement;
         const hexOverrides: Record<string, string> = {
           "--background": "#f9f9fb",
