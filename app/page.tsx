@@ -80,8 +80,8 @@ export default function Home() {
     const { jsPDF } = await import("jspdf");
 
     const imgData = await toJpeg(el, {
-      quality: 0.98,
-      pixelRatio: 3,
+      quality: 1.0,
+      pixelRatio: 5,
       backgroundColor: "#ffffff",
       skipFonts: false,
     });
