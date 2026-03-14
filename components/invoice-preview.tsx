@@ -249,6 +249,9 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
                 letterSpacing: "0.3px",
                 textAlign: "center",
                 padding: "16px 8px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
               }}>
                 Payment Status
               </div>
@@ -261,6 +264,9 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
                 color: C.black,
                 textAlign: "center",
                 padding: "16px 8px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
               }}>
                 {data.paymentStatus}
               </div>
