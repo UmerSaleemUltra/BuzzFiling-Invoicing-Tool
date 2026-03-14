@@ -251,7 +251,7 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
                           textTransform: "uppercase",
                           letterSpacing: "0.6px",
                           color: C.black,
-                          padding: "4px 16px 4px 0",
+                          padding: "12px 28px 12px 0",
                           whiteSpace: "nowrap",
                           verticalAlign: "middle",
                         }}>
@@ -261,7 +261,7 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
                           fontSize: "9.5px",
                           fontWeight: bold ? "700" : "400",
                           color: C.black,
-                          padding: "4px 0",
+                          padding: "12px 0",
                           verticalAlign: "middle",
                         }}>
                           {value}
