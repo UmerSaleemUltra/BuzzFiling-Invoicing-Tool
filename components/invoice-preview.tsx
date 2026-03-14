@@ -160,13 +160,52 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
       </div>
 
       {/* ── META ROW ──────────────────────────────────────────────────────── */}
-      <div style={{ position: "relative", padding: `14px ${PAD}px`, minHeight: "100px" }}>
+      <div style={{ padding: `14px ${PAD}px`, overflow: "hidden" }}>
 
-        {/* Bill To + Invoice fields — left side */}
+        {/* Payment Status — floated right so it renders independently in html2canvas */}
+        <div style={{ float: "right", width: "180px", marginLeft: "12px" }}>
+          <table style={{ width: "100%", borderCollapse: "collapse" }}>
+            <tbody>
+              <tr>
+                <td style={{
+                  background: statusBg,
+                  color: C.white,
+                  fontWeight: "700",
+                  fontSize: "13px",
+                  letterSpacing: "0.3px",
+                  textAlign: "center",
+                  verticalAlign: "middle",
+                  padding: "16px 8px",
+                  height: "48px",
+                }}>
+                  Payment Status
+                </td>
+              </tr>
+              <tr>
+                <td style={{
+                  background: "#f5f5f5",
+                  border: `1px solid ${C.border}`,
+                  borderTop: "none",
+                  fontWeight: "700",
+                  fontSize: "14px",
+                  color: C.black,
+                  textAlign: "center",
+                  verticalAlign: "middle",
+                  padding: "16px 8px",
+                  height: "48px",
+                }}>
+                  {data.paymentStatus}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        {/* Bill To + Invoice fields — flows left of the float */}
         <table style={{
           borderCollapse: "collapse",
           tableLayout: "fixed",
-          width: `${PAGE_W - PAD * 2 - 190}px`,
+          width: `${PAGE_W - PAD * 2 - 200}px`,
         }}>
           <colgroup>
             <col style={{ width: "200px" }} />
@@ -236,38 +275,6 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
           </tbody>
         </table>
 
-        {/* ── Payment Status — positioned independently ── */}
-        <div style={{
-          position: "absolute",
-          top: "14px",
-          right: `${PAD}px`,
-          width: "180px",
-        }}>
-          <div style={{
-            background: statusBg,
-            color: C.white,
-            fontWeight: "700",
-            fontSize: "13px",
-            letterSpacing: "0.3px",
-            textAlign: "center",
-            padding: "16px 8px",
-          }}>
-            Payment Status
-          </div>
-          <div style={{
-            background: "#f5f5f5",
-            border: `1px solid ${C.border}`,
-            borderTop: "none",
-            fontWeight: "700",
-            fontSize: "14px",
-            color: C.black,
-            textAlign: "center",
-            padding: "16px 8px",
-          }}>
-            {data.paymentStatus}
-          </div>
-        </div>
-
       </div>
 
       {/* ── LINE ITEMS + TOTALS (unified table) ──────────────────────────── */}
@@ -320,56 +327,61 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
           </tbody>
         </table>
 
-        {/* Totals block — single gradient wrapper, rows transparent */}
-        <div style={{ background: BRAND, display: "flex", flexDirection: "column" }}>
-          {totalsRows.map(([label, value]) => (
-            <div key={label} style={{
-              background: "transparent",
-              display: "grid",
-              gridTemplateColumns: "auto 90px 100px",
-              alignItems: "center",
-            }}>
-              <div style={{ padding: "5px 12px" }} />
-              <div style={{
-                padding: "5px 12px",
-                fontSize: "9px",
+        {/* Totals block — table for reliable html2canvas rendering */}
+        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+          <colgroup>
+            <col />
+            <col style={{ width: "90px" }} />
+            <col style={{ width: "100px" }} />
+          </colgroup>
+          <tbody>
+            {totalsRows.map(([label, value]) => (
+              <tr key={label}>
+                <td style={{ background: BRAND, padding: "5px 12px" }} />
+                <td style={{
+                  background: BRAND,
+                  padding: "5px 12px",
+                  fontSize: "9px",
+                  color: C.white,
+                  fontWeight: "400",
+                  textAlign: "left",
+                  verticalAlign: "middle",
+                }}>{label}</td>
+                <td style={{
+                  background: BRAND,
+                  padding: "5px 12px",
+                  fontSize: "9.5px",
+                  color: C.white,
+                  fontWeight: "700",
+                  textAlign: "right",
+                  verticalAlign: "middle",
+                }}>{value}</td>
+              </tr>
+            ))}
+            {/* Balance row */}
+            <tr>
+              <td style={{ background: BRAND, padding: "10px 12px" }} />
+              <td style={{
+                background: BRAND,
+                padding: "10px 12px",
+                fontSize: "15px",
+                fontWeight: "900",
                 color: C.white,
-                fontWeight: "400",
                 textAlign: "left",
-              }}>{label}</div>
-              <div style={{
-                padding: "5px 12px",
-                fontSize: "9.5px",
+                verticalAlign: "middle",
+              }}>Balance</td>
+              <td style={{
+                background: BRAND,
+                padding: "10px 12px",
+                fontSize: "14px",
+                fontWeight: "900",
                 color: C.white,
-                fontWeight: "700",
                 textAlign: "right",
-              }}>{value}</div>
-            </div>
-          ))}
-          {/* Balance row */}
-          <div style={{
-            background: "transparent",
-            display: "grid",
-            gridTemplateColumns: "auto 90px 100px",
-            alignItems: "center",
-          }}>
-            <div style={{ padding: "10px 12px" }} />
-            <div style={{
-              padding: "10px 12px",
-              fontSize: "15px",
-              fontWeight: "900",
-              color: C.white,
-              textAlign: "left",
-            }}>Balance</div>
-            <div style={{
-              padding: "10px 12px",
-              fontSize: "14px",
-              fontWeight: "900",
-              color: C.white,
-              textAlign: "right",
-            }}>${balance.toFixed(2)}</div>
-          </div>
-        </div>
+                verticalAlign: "middle",
+              }}>${balance.toFixed(2)}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
       {/* ── THANK YOU ─────────────────────────────────────────────────────── */}
@@ -389,9 +401,9 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
       {/* ── PKR BANK ──────────────────────────────────────────────────────── */}
       <div style={{ padding: `0 ${PAD}px 24px` }}>
         <div style={labelStyle}>PKR BANK</div>
-        <div style={{ display: "flex", flexDirection: "column", gap: "3px" }}>
+        <div>
           {bankRows.map(([label, value]) => (
-            <div key={label} style={{ fontSize: "9px", color: C.black, lineHeight: "1.6" }}>
+            <div key={label} style={{ fontSize: "9px", color: C.black, lineHeight: "1.6", marginBottom: "3px" }}>
               {label}: {value}
             </div>
           ))}
@@ -402,17 +414,23 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
       <div style={{ flex: 1 }} />
 
       {/* ── PRE-FOOTER ROW ────────────────────────────────────────────────── */}
-      <div style={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        padding: `10px ${PAD}px`,
+      <table style={{
+        width: "100%",
+        borderCollapse: "collapse",
         borderTop: `1px dashed ${C.border}`,
         marginTop: "8px",
       }}>
-        <span style={{ fontSize: "8px", color: C.black, letterSpacing: "0.2px" }}>E. &amp; O. E</span>
-        <span style={{ fontSize: "8px", fontWeight: "500", color: BRAND }}>NOTE : Please email us the payment receipt.</span>
-      </div>
+        <tbody>
+          <tr>
+            <td style={{ padding: `10px ${PAD}px`, fontSize: "8px", color: C.black, letterSpacing: "0.2px", verticalAlign: "middle" }}>
+              E. &amp; O. E
+            </td>
+            <td style={{ padding: `10px ${PAD}px`, fontSize: "8px", fontWeight: "500", color: BRAND, textAlign: "right", verticalAlign: "middle" }}>
+              NOTE : Please email us the payment receipt.
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
     </div>
   );
