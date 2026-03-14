@@ -240,45 +240,29 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
             </td>
 
             {/* ── Payment Status ── */}
-            <td style={{ verticalAlign: "middle", paddingTop: "14px", paddingBottom: "14px" }}>
-              {/* Red header strip */}
+            <td style={{ verticalAlign: "top", paddingTop: "14px", paddingBottom: "14px", height: "1px" }}>
               <div style={{
-                display: "table",
-                width: "100%",
                 background: statusBg,
+                color: C.white,
+                fontWeight: "700",
+                fontSize: "13px",
+                letterSpacing: "0.3px",
+                textAlign: "center",
+                padding: "16px 8px",
               }}>
-                <div style={{
-                  display: "table-cell",
-                  textAlign: "center",
-                  verticalAlign: "middle",
-                  padding: "14px 8px",
-                  color: C.white,
-                  fontWeight: "700",
-                  fontSize: "13px",
-                  letterSpacing: "0.3px",
-                }}>
-                  Payment Status
-                </div>
+                Payment Status
               </div>
-              {/* Status value strip */}
               <div style={{
-                display: "table",
-                width: "100%",
                 background: "#f5f5f5",
                 border: `1px solid ${C.border}`,
                 borderTop: "none",
+                fontWeight: "700",
+                fontSize: "14px",
+                color: C.black,
+                textAlign: "center",
+                padding: "16px 8px",
               }}>
-                <div style={{
-                  display: "table-cell",
-                  textAlign: "center",
-                  verticalAlign: "middle",
-                  padding: "14px 8px",
-                  fontWeight: "700",
-                  fontSize: "14px",
-                  color: C.black,
-                }}>
-                  {data.paymentStatus}
-                </div>
+                {data.paymentStatus}
               </div>
             </td>
 
