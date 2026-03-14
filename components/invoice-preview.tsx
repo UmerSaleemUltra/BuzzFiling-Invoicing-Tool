@@ -132,20 +132,20 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
         </div>
 
         {/* Address block */}
-        <p style={{ fontSize: "9.5px", color: "#555555", margin: "0 0 3px", letterSpacing: "0.1px" }}>
+        <p style={{ fontSize: "9.5px", color: C.black, margin: "0 0 3px", letterSpacing: "0.1px" }}>
           {COMPANY_INFO.address}
         </p>
-        <p style={{ fontSize: "9.5px", color: "#555555", margin: "0 0 3px" }}>
+        <p style={{ fontSize: "9.5px", color: C.black, margin: "0 0 3px" }}>
           {COMPANY_INFO.website}
-          <span style={{ margin: "0 5px", color: "#aaaaaa" }}>•</span>
+          <span style={{ margin: "0 5px", color: C.black }}>•</span>
           {COMPANY_INFO.email}
-          <span style={{ margin: "0 5px", color: "#aaaaaa" }}>•</span>
+          <span style={{ margin: "0 5px", color: C.black }}>•</span>
           {COMPANY_INFO.ordersEmail}
         </p>
-        <p style={{ fontSize: "9.5px", color: "#555555", margin: "0 0 20px" }}>
+        <p style={{ fontSize: "9.5px", color: C.black, margin: "0 0 20px" }}>
           {COMPANY_INFO.phones.map((p, i) => (
             <span key={p}>
-              {i > 0 && <span style={{ margin: "0 5px", color: "#aaaaaa" }}>•</span>}
+              {i > 0 && <span style={{ margin: "0 5px", color: C.black }}>•</span>}
               {p}
             </span>
           ))}
@@ -311,7 +311,7 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
                   <td style={cell({ fontWeight: "500", padding: "9px 12px" })}>
                     {item.description || "—"}
                   </td>
-                  <td style={cell({ color: C.grayText, fontSize: "8.5px", padding: "9px 12px" })}>
+                  <td style={cell({ color: C.black, fontSize: "8.5px", padding: "9px 12px" })}>
                     {item.rate === 0 ? "INCLUDED" : ""}
                   </td>
                   <td style={cell({ textAlign: "center", padding: "9px 12px" })}>{item.qty}</td>
@@ -389,7 +389,7 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
       {/* ── PAYMENT TERMS ─────────────────────────────────────────────────── */}
       <div style={{ padding: `0 ${PAD}px 20px` }}>
         <div style={labelStyle}>PAYMENT TERMS</div>
-        <div style={{ fontSize: "9px", color: C.dimText, lineHeight: "1.8" }}>
+        <div style={{ fontSize: "9px", color: C.black, lineHeight: "1.8" }}>
           {data.paymentTerms || "—"}
         </div>
       </div>
@@ -399,14 +399,14 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
         <div style={labelStyle}>PKR BANK</div>
         <div style={{ display: "flex", flexDirection: "column", gap: "3px" }}>
           {bankRows.map(([label, value]) => (
-            <div key={label} style={{ fontSize: "9px", color: C.dimText, lineHeight: "1.6" }}>
+            <div key={label} style={{ fontSize: "9px", color: C.black, lineHeight: "1.6" }}>
               {label}: {value}
             </div>
           ))}
         </div>
       </div>
 
-      {/* ── FLEX SPACER ───────────────────────────────────────────────────── */}
+      {/* ── FLEX SPACER ───────────���───────────────────────────────────────── */}
       <div style={{ flex: 1 }} />
 
       {/* ── PRE-FOOTER ROW ────────────────────────────────────────────────── */}
@@ -418,7 +418,7 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
         borderTop: `1px dashed ${C.border}`,
         marginTop: "8px",
       }}>
-        <span style={{ fontSize: "8px", color: C.grayText, letterSpacing: "0.2px" }}>E. &amp; O. E</span>
+        <span style={{ fontSize: "8px", color: C.black, letterSpacing: "0.2px" }}>E. &amp; O. E</span>
         <span style={{ fontSize: "8px", fontWeight: "500", color: BRAND }}>NOTE : Please email us the payment receipt.</span>
       </div>
 
