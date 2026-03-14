@@ -28,11 +28,7 @@ const PAGE_W  = 794;   // A4 @ 96 dpi
 const PAGE_H  = 1123;
 const PAD     = 40;
 
-const statusColorMap: Record<string, string> = {
-  Paid:           "#16a34a",
-  "Partial Paid": BRAND,
-  Unpaid:         BRAND,
-};
+
 
 // ─── Shared style helpers ─────────────────────────────────────────────────────
 const cell = (overrides: CSSProperties = {}): CSSProperties => ({
@@ -77,7 +73,7 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
       })
     : "";
 
-  const statusBg = statusColorMap[data.paymentStatus] ?? BRAND;
+  const statusBg = BRAND;
 
   const metaRows: [string, string, boolean][] = [
     ["INVOICE NUMBER", String(data.invoiceNumber), false],
