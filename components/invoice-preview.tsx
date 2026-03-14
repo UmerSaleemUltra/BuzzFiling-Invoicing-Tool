@@ -28,11 +28,7 @@ const PAGE_W  = 794;   // A4 @ 96 dpi
 const PAGE_H  = 1123;
 const PAD     = 40;
 
-const statusColorMap: Record<string, { header: string; valueBg: string; valueColor: string }> = {
-  Paid:           { header: "#16a34a", valueBg: "#dcfce7", valueColor: "#15803d" },
-  "Partial Paid": { header: BRAND,     valueBg: "#fff1f2", valueColor: "#000000" },
-  Unpaid:         { header: "#dc2626", valueBg: "#fee2e2", valueColor: "#991b1b" },
-};
+
 
 // ─── Shared style helpers ─────────────────────────────────────────────────────
 const cell = (overrides: CSSProperties = {}): CSSProperties => ({
@@ -77,8 +73,7 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
       })
     : "";
 
-  const statusColors = statusColorMap[data.paymentStatus] ?? { header: BRAND, valueBg: "#fff1f2", valueColor: "#000000" };
-  const statusBg = statusColors.header;
+  const statusBg = BRAND;
 
   const metaRows: [string, string, boolean][] = [
     ["INVOICE NUMBER", String(data.invoiceNumber), false],
@@ -184,12 +179,12 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
               </tr>
               <tr>
                 <td style={{
-                  background: statusColors.valueBg,
+                  background: "#f5f5f5",
                   border: `1px solid ${C.border}`,
                   borderTop: "none",
                   fontWeight: "700",
                   fontSize: "14px",
-                  color: statusColors.valueColor,
+                  color: C.black,
                   textAlign: "center",
                   verticalAlign: "middle",
                   padding: "16px 8px",
