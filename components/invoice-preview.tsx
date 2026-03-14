@@ -241,38 +241,37 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
 
             {/* ── Payment Status ── */}
             <td style={{ verticalAlign: "top", paddingTop: "14px", paddingBottom: "14px" }}>
-              <table style={{ borderCollapse: "collapse", width: "100%" }}>
-                <tbody>
-                  <tr>
-                    <td style={{
-                      background: statusBg,
-                      color: C.white,
-                      fontWeight: "700",
-                      fontSize: "13px",
-                      letterSpacing: "0.3px",
-                      textAlign: "center",
-                      verticalAlign: "middle",
-                      padding: "14px 8px",
-                    }}>
-                      Payment Status
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style={{
-                      border: `1px solid ${C.border}`,
-                      fontWeight: "700",
-                      fontSize: "14px",
-                      color: C.black,
-                      background: "#f5f5f5",
-                      textAlign: "center",
-                      verticalAlign: "middle",
-                      padding: "14px 8px",
-                    }}>
-                      {data.paymentStatus}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+              <div style={{
+                background: statusBg,
+                color: C.white,
+                fontWeight: "700",
+                fontSize: "13px",
+                letterSpacing: "0.3px",
+                textAlign: "center",
+                height: "48px",
+                lineHeight: "48px",
+                overflow: "hidden",
+                display: "block",
+                width: "100%",
+              }}>
+                Payment Status
+              </div>
+              <div style={{
+                border: `1px solid ${C.border}`,
+                borderTop: "none",
+                fontWeight: "700",
+                fontSize: "14px",
+                color: C.black,
+                background: "#f5f5f5",
+                textAlign: "center",
+                height: "48px",
+                lineHeight: "48px",
+                overflow: "hidden",
+                display: "block",
+                width: "100%",
+              }}>
+                {data.paymentStatus}
+              </div>
             </td>
 
             {/* right padding cell */}
