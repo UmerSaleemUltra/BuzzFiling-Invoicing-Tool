@@ -165,21 +165,21 @@ export default function Home() {
         </aside>
 
         {/* Right: Preview */}
-        <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-10" style={{ background: "#f3f4f6" }}>
-          <div className="max-w-4xl mx-auto">
-            <div className="flex items-center justify-between mb-6">
-              <div className="flex items-center gap-2">
-                <span className="w-1 h-4 rounded-full inline-block" style={{ background: "linear-gradient(135deg, #ff0d13 0%, #ff6b00 100%)" }} />
-                <p className="text-[10px] font-bold tracking-[0.2em] uppercase" style={{ color: "#0d0f1a" }}>
-                  Live Preview
-                </p>
-              </div>
-              <span className="text-[10px] text-muted-foreground bg-white border border-border px-2.5 py-1 rounded-full">
-                Updates automatically
-              </span>
+        <main className="flex-1 min-w-0 overflow-y-auto overflow-x-hidden p-4 sm:p-6 lg:p-10" style={{ background: "#f3f4f6" }}>
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center gap-2">
+              <span className="w-1 h-4 rounded-full inline-block" style={{ background: "linear-gradient(135deg, #ff0d13 0%, #ff6b00 100%)" }} />
+              <p className="text-[10px] font-bold tracking-[0.2em] uppercase" style={{ color: "#0d0f1a" }}>
+                Live Preview
+              </p>
             </div>
-            {/* Horizontally scrollable on small screens */}
-            <div className="overflow-x-auto">
+            <span className="text-[10px] text-muted-foreground bg-white border border-border px-2.5 py-1 rounded-full">
+              Updates automatically
+            </span>
+          </div>
+          {/* Horizontally scrollable on small screens, centered on large */}
+          <div className="overflow-x-auto pb-4">
+            <div className="mx-auto" style={{ width: "794px" }}>
               <InvoicePreview ref={previewRef} data={invoiceData} />
             </div>
           </div>
