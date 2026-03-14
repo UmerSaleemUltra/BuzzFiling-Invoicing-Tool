@@ -253,7 +253,7 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
                 alignItems: "center",
                 justifyContent: "center",
               }}>
-                Payment Status
+                <span style={{ marginTop: "-10px" }}>Payment Status</span>
               </div>
               <div style={{
                 background: "#f5f5f5",
@@ -268,7 +268,7 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
                 alignItems: "center",
                 justifyContent: "center",
               }}>
-                {data.paymentStatus}
+                <span style={{ marginTop: "-10px" }}>{data.paymentStatus}</span>
               </div>
             </td>
 
