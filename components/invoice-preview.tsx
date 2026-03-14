@@ -239,7 +239,7 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
               <td style={{ verticalAlign: "top" }}>
                 <table style={{ borderCollapse: "collapse", width: "100%" }}>
                   <colgroup>
-                    <col style={{ width: "220px" }} />
+                    <col style={{ width: "100px" }} />
                     <col />
                   </colgroup>
                   <tbody>
