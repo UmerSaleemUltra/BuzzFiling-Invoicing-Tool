@@ -76,59 +76,18 @@ export default function Home() {
     const el = document.getElementById("invoice-preview");
     if (!el) return;
 
-    const html2canvas = (await import("html2canvas")).default;
+    const { toJpeg } = await import("html-to-image");
     const { jsPDF } = await import("jspdf");
 
-    const canvas = await html2canvas(el, {
-      scale: 5.67,
-      useCORS: true,
+    const imgData = await toJpeg(el, {
+      quality: 0.98,
+      pixelRatio: 3,
       backgroundColor: "#ffffff",
-      logging: false,
-      imageTimeout: 0,
-      removeContainer: true,
-      onclone: (clonedDoc) => {
-        const root = clonedDoc.documentElement;
-        const hexOverrides: Record<string, string> = {
-          "--background": "#f9f9fb",
-          "--foreground": "#0d0f1a",
-          "--card": "#ffffff",
-          "--card-foreground": "#0d0f1a",
-          "--popover": "#ffffff",
-          "--popover-foreground": "#0d0f1a",
-          "--primary": "#ff0d13",
-          "--primary-dark": "#cc0a0f",
-          "--primary-foreground": "#ffffff",
-          "--secondary": "#f3f4f6",
-          "--secondary-foreground": "#0d0f1a",
-          "--muted": "#f3f4f6",
-          "--muted-foreground": "#6b7280",
-          "--accent": "#ff0d13",
-          "--accent-foreground": "#ffffff",
-          "--destructive": "#ff0d13",
-          "--destructive-foreground": "#ffffff",
-          "--border": "#e5e7eb",
-          "--input": "#e5e7eb",
-          "--ring": "#ff0d13",
-        };
-        Object.entries(hexOverrides).forEach(([prop, value]) => {
-          root.style.setProperty(prop, value);
-        });
-      },
+      skipFonts: false,
     });
 
     const A4_W = 210;
     const A4_H = 297;
-
-    // Use a second canvas to compress: draw at 96% quality into an offscreen canvas
-    // then export as JPEG at high quality — sharp text, smaller file than PNG
-    const offscreen = document.createElement("canvas");
-    offscreen.width  = canvas.width;
-    offscreen.height = canvas.height;
-    const ctx = offscreen.getContext("2d")!;
-    ctx.fillStyle = "#ffffff";
-    ctx.fillRect(0, 0, offscreen.width, offscreen.height);
-    ctx.drawImage(canvas, 0, 0);
-    const imgData = offscreen.toDataURL("image/jpeg", 0.78);
 
     const pdf = new jsPDF({
       orientation: "portrait",
@@ -136,7 +95,6 @@ export default function Home() {
       format: "a4",
     });
 
-    // Always fill the full A4 page — one page only
     pdf.addImage(imgData, "JPEG", 0, 0, A4_W, A4_H, undefined, "FAST");
 
     const defaultName = `Invoice-${invoiceData.invoiceNumber}-${invoiceData.billTo.replace(/\s+/g, "-")}`;
