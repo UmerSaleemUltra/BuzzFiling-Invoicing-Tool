@@ -83,7 +83,7 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
     ["INVOICE NUMBER", String(data.invoiceNumber), false],
     ["INVOICE DATE",   formattedDate || "—",        false],
     ["SERVICES TYPE",  data.serviceType || "—",      false],
-    ["INVOICE BY",     data.invoiceBy   || "—",      true],
+    ["INVOICE BY",     data.invoiceBy   || "—",      false],
   ];
 
   const totalsRows: [string, string][] = [
@@ -406,7 +406,7 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
         </div>
       </div>
 
-      {/* ── FLEX SPACER ───────────���───────────────────────────────────────── */}
+      {/* ── FLEX SPACER ───────────���───────��───────────────────────────────── */}
       <div style={{ flex: 1 }} />
 
       {/* ── PRE-FOOTER ROW ────────────────────────────────────────────────── */}
