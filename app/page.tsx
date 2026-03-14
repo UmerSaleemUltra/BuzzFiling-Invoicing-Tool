@@ -87,6 +87,12 @@ export default function Home() {
       imageTimeout: 0,
       removeContainer: true,
       onclone: (clonedDoc) => {
+        // Apply -10px margin to Payment Status text only in the PDF clone
+        clonedDoc.querySelectorAll<HTMLElement>(".ps-header, .ps-value").forEach((el) => {
+          el.style.paddingTop = "6px";
+          el.style.paddingBottom = "6px";
+        });
+
         const root = clonedDoc.documentElement;
         const hexOverrides: Record<string, string> = {
           "--background": "#f9f9fb",

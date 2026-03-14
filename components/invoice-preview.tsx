@@ -241,34 +241,34 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
 
             {/* ── Payment Status ── */}
             <td style={{ verticalAlign: "top", paddingTop: "14px", paddingBottom: "14px", height: "1px" }}>
-              <div style={{
-                background: statusBg,
-                color: C.white,
-                fontWeight: "700",
-                fontSize: "13px",
-                letterSpacing: "0.3px",
-                textAlign: "center",
-                padding: "16px 8px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}>
-                <span style={{ marginTop: "-10px" }}>Payment Status</span>
+              <div
+                className="ps-header"
+                style={{
+                  background: statusBg,
+                  color: C.white,
+                  fontWeight: "700",
+                  fontSize: "13px",
+                  letterSpacing: "0.3px",
+                  textAlign: "center",
+                  padding: "16px 8px",
+                }}
+              >
+                Payment Status
               </div>
-              <div style={{
-                background: "#f5f5f5",
-                border: `1px solid ${C.border}`,
-                borderTop: "none",
-                fontWeight: "700",
-                fontSize: "14px",
-                color: C.black,
-                textAlign: "center",
-                padding: "16px 8px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}>
-                <span style={{ marginTop: "-10px" }}>{data.paymentStatus}</span>
+              <div
+                className="ps-value"
+                style={{
+                  background: "#f5f5f5",
+                  border: `1px solid ${C.border}`,
+                  borderTop: "none",
+                  fontWeight: "700",
+                  fontSize: "14px",
+                  color: C.black,
+                  textAlign: "center",
+                  padding: "16px 8px",
+                }}
+              >
+                {data.paymentStatus}
               </div>
             </td>
 
