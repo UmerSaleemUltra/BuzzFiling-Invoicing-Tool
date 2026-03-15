@@ -244,7 +244,8 @@ export default function InvoiceForm({
               type="number"
               min={0}
               step={0.01}
-              value={data.discount}
+              placeholder="0"
+              value={data.discount === 0 ? "" : data.discount}
               onChange={(e) => updateField("discount", parseFloat(e.target.value) || 0)}
               className="field-input h-9"
             />
@@ -257,7 +258,8 @@ export default function InvoiceForm({
               type="number"
               min={0}
               step={0.01}
-              value={data.paymentReceived}
+              placeholder="0"
+              value={data.paymentReceived === 0 ? "" : data.paymentReceived}
               onChange={(e) => updateField("paymentReceived", parseFloat(e.target.value) || 0)}
               className="field-input h-9"
             />

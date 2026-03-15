@@ -26,7 +26,6 @@ export const COMPANY_INFO = {
   name: "BUZZ FILING",
   website: "www.buzzfiling.com",
   email: "hello@buzzfiling.com",
-  ordersEmail: "orders.buzzfiling@gmail.com",
   filingEmail: "filings@buzzfiling.com",
   phones: ["+92 3394882800", "+44 (774) 058-3294", "+1 (786) 574-9305"],
   address:
