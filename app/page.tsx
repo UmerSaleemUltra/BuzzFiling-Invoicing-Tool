@@ -32,10 +32,13 @@ export default function Home() {
   }));
 
   const [mounted, setMounted] = useState(false);
+  const [invoiceNumLoading, setInvoiceNumLoading] = useState(true);
+  const downloadingRef = useRef(false);
 
   const previewRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    setMounted(true);
     const saved = loadFormData();
     // Restore form data but NEVER restore invoiceNumber from localStorage
     if (saved) {
@@ -52,10 +55,9 @@ export default function Home() {
         }
       })
       .catch(() => {
-        // fallback: start from 2100
         setInvoiceData((prev) => ({ ...prev, invoiceNumber: 2100 }));
       })
-      .finally(() => setMounted(true));
+      .finally(() => setInvoiceNumLoading(false));
   }, []);
 
   useEffect(() => {
@@ -65,6 +67,7 @@ export default function Home() {
   }, [invoiceData, mounted]);
 
   const handleDownload = useCallback(async () => {
+    if (downloadingRef.current) return; // prevent double-fire
     if (!invoiceData.billTo.trim()) {
       alert("Please enter a client name (Bill To) before downloading.");
       return;
@@ -73,6 +76,7 @@ export default function Home() {
       alert("Please add at least one service description before downloading.");
       return;
     }
+    downloadingRef.current = true;
 
     const el = document.getElementById("invoice-preview");
     if (!el) return;
@@ -111,9 +115,9 @@ export default function Home() {
         }
       })
       .catch(() => {
-        // fallback: increment locally
         setInvoiceData((prev) => ({ ...prev, invoiceNumber: prev.invoiceNumber + 1 }));
-      });
+      })
+      .finally(() => { downloadingRef.current = false; });
   }, [invoiceData]);
 
   const handleReset = useCallback(() => {
@@ -141,8 +145,6 @@ export default function Home() {
       localStorage.removeItem(FORM_DATA_KEY);
     }
   }, []);
-
-  if (!mounted) return null;
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -177,6 +179,7 @@ export default function Home() {
             setData={setInvoiceData}
             onDownload={handleDownload}
             onReset={handleReset}
+            invoiceNumLoading={invoiceNumLoading}
           />
         </aside>
 
