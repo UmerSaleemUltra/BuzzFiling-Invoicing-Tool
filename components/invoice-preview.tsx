@@ -179,7 +179,7 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
               </tr>
               <tr>
                 <td style={{
-                  background: "#f5f5f5",
+                  background: C.white,
                   border: `1px solid ${C.border}`,
                   borderTop: "none",
                   fontWeight: "700",
