@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import InvoiceForm from "@/components/invoice-form";
 import InvoicePreview from "@/components/invoice-preview";
+import PasscodeGate from "@/components/passcode-gate";
 import { InvoiceData, DEFAULT_INVOICE } from "@/lib/invoice-types";
 
 const FORM_DATA_KEY = "buzz_filing_form_data";
@@ -147,6 +148,7 @@ export default function Home() {
   }, []);
 
   return (
+    <PasscodeGate>
     <div className="min-h-screen bg-background flex flex-col">
 
       {/* ── Header ── */}
@@ -206,5 +208,6 @@ export default function Home() {
 
       </div>
     </div>
+    </PasscodeGate>
   );
 }
