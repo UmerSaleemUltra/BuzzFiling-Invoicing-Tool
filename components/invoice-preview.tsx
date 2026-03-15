@@ -395,7 +395,7 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
       </div>
 
       {/* ── PKR BANK ──────────────────────────────────────────────────────── */}
-      <div style={{ padding: `0 ${PAD}px 24px` }}>
+      <div style={{ padding: `0 ${PAD}px 16px` }}>
         <div style={labelStyle}>PKR BANK</div>
         <div>
           {bankRows.map(([label, value]) => (
@@ -403,6 +403,33 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
               {label}: {value}
             </div>
           ))}
+        </div>
+      </div>
+
+      {/* ── USD BANK ──────────────────────────────────────────────────────── */}
+      <div style={{ padding: `0 ${PAD}px 16px` }}>
+        <div style={labelStyle}>USD BANK</div>
+        <div>
+          {[
+            ["Account Title",    "INCORZ LLC"],
+            ["Type of Account",  "Checking"],
+            ["Account Number",   "660270560183679"],
+            ["Routing Number",   "121145433"],
+            ["Bank Name",        "Column N.A."],
+            ["Recipient Address","1209 Mountain Road Place Northeast, STE R Albuquerque, NM 87110"],
+          ].map(([label, value]) => (
+            <div key={label} style={{ fontSize: "9px", color: C.black, lineHeight: "1.6", marginBottom: "3px" }}>
+              {label}: {value}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ── PAYONEER ──────────────────────────────────────────────────────── */}
+      <div style={{ padding: `0 ${PAD}px 24px` }}>
+        <div style={labelStyle}>PAYONEER</div>
+        <div style={{ fontSize: "9px", color: C.black, lineHeight: "1.6" }}>
+          incorz.official@gmail.com
         </div>
       </div>
 
