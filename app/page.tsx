@@ -97,7 +97,8 @@ export default function Home() {
 
     pdf.addImage(imgData, "JPEG", 0, 0, A4_W, A4_H, undefined, "FAST");
 
-    const resolvedName = `Invoice-${invoiceData.invoiceNumber}-${invoiceData.billTo.replace(/\s+/g, "-")}`;
+    const serviceDesc = invoiceData.lineItems.find((i) => i.description.trim())?.description.trim() ?? "Service";
+    const resolvedName = `Mr. ${invoiceData.billTo.trim()} - ${serviceDesc} - Invoice ${invoiceData.invoiceNumber}`;
     pdf.save(`${resolvedName}.pdf`);
 
     saveInvoiceNumber(invoiceData.invoiceNumber + 1);
