@@ -26,7 +26,7 @@ function saveFormData(data: InvoiceData) {
 export default function Home() {
   const [invoiceData, setInvoiceData] = useState<InvoiceData>(() => ({
     ...DEFAULT_INVOICE,
-    invoiceNumber: 2869,
+    invoiceNumber: 2100,
   }));
 
   const [mounted, setMounted] = useState(false);
