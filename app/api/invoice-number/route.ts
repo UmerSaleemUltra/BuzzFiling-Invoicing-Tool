@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { getDb } from "@/lib/mongodb";
 
 const COUNTER_ID = "invoice_number";
-const START_VALUE = 2869;
+const START_VALUE = 2100;
 
 // GET — returns the current invoice number without incrementing
 export async function GET() {
