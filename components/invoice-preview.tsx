@@ -137,6 +137,8 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
           {COMPANY_INFO.email}
           <span style={{ margin: "0 5px", color: C.black }}>•</span>
           {COMPANY_INFO.ordersEmail}
+          <span style={{ margin: "0 5px", color: C.black }}>•</span>
+          {COMPANY_INFO.filingEmail}
         </p>
         <p style={{ fontSize: "9.5px", color: C.black, margin: "0 0 20px" }}>
           {COMPANY_INFO.phones.map((p, i) => (
