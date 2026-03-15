@@ -43,7 +43,7 @@ export default function Home() {
   }));
 
   const [mounted, setMounted] = useState(false);
-  const [fileName, setFileName] = useState("");
+
   const previewRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -97,12 +97,11 @@ export default function Home() {
 
     pdf.addImage(imgData, "JPEG", 0, 0, A4_W, A4_H, undefined, "FAST");
 
-    const defaultName = `Invoice-${invoiceData.invoiceNumber}-${invoiceData.billTo.replace(/\s+/g, "-")}`;
-    const resolvedName = fileName.trim() ? fileName.trim().replace(/\.pdf$/i, "") : defaultName;
+    const resolvedName = `Invoice-${invoiceData.invoiceNumber}-${invoiceData.billTo.replace(/\s+/g, "-")}`;
     pdf.save(`${resolvedName}.pdf`);
 
     saveInvoiceNumber(invoiceData.invoiceNumber + 1);
-  }, [invoiceData, fileName]);
+  }, [invoiceData]);
 
   const handleReset = useCallback(() => {
     const nextNum = getNextInvoiceNumber();
@@ -159,8 +158,6 @@ export default function Home() {
             setData={setInvoiceData}
             onDownload={handleDownload}
             onReset={handleReset}
-            fileName={fileName}
-            setFileName={setFileName}
           />
         </aside>
 
