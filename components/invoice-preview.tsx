@@ -302,7 +302,7 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(({ data }
             {data.lineItems.map((item, idx) => {
               const amount = item.qty * item.rate;
               return (
-                <tr key={item.id} style={{ background: idx % 2 === 0 ? C.white : C.rowAlt }}>
+                <tr key={item.id} style={{ background: C.white }}>
                   <td style={cell({ fontWeight: "500", padding: "9px 12px" })}>
                     {item.description || "—"}
                   </td>
