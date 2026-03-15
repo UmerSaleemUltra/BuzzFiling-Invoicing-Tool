@@ -19,7 +19,9 @@ function loadFormData(): InvoiceData | null {
 
 function saveFormData(data: InvoiceData) {
   if (typeof window !== "undefined") {
-    localStorage.setItem(FORM_DATA_KEY, JSON.stringify(data));
+    // Never persist invoiceNumber — always sourced from MongoDB
+    const { invoiceNumber: _ignored, ...rest } = data;
+    localStorage.setItem(FORM_DATA_KEY, JSON.stringify(rest));
   }
 }
 
@@ -35,9 +37,13 @@ export default function Home() {
 
   useEffect(() => {
     const saved = loadFormData();
-    if (saved) setInvoiceData(saved);
+    // Restore form data but NEVER restore invoiceNumber from localStorage
+    if (saved) {
+      const { invoiceNumber: _ignored, ...rest } = saved;
+      setInvoiceData((prev) => ({ ...prev, ...rest }));
+    }
 
-    // Fetch current invoice number from MongoDB
+    // Always get invoice number from MongoDB
     fetch("/api/invoice-number")
       .then((r) => r.json())
       .then(({ invoiceNumber }) => {
@@ -46,7 +52,8 @@ export default function Home() {
         }
       })
       .catch(() => {
-        // fallback: keep default
+        // fallback: start from 2100
+        setInvoiceData((prev) => ({ ...prev, invoiceNumber: 2100 }));
       })
       .finally(() => setMounted(true));
   }, []);
