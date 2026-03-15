@@ -5,20 +5,7 @@ import InvoiceForm from "@/components/invoice-form";
 import InvoicePreview from "@/components/invoice-preview";
 import { InvoiceData, DEFAULT_INVOICE } from "@/lib/invoice-types";
 
-const INVOICE_NUMBER_KEY = "buzz_filing_invoice_number";
 const FORM_DATA_KEY = "buzz_filing_form_data";
-
-function getNextInvoiceNumber(): number {
-  if (typeof window === "undefined") return 2869;
-  const stored = localStorage.getItem(INVOICE_NUMBER_KEY);
-  return stored ? parseInt(stored, 10) : 2869;
-}
-
-function saveInvoiceNumber(n: number) {
-  if (typeof window !== "undefined") {
-    localStorage.setItem(INVOICE_NUMBER_KEY, String(n));
-  }
-}
 
 function loadFormData(): InvoiceData | null {
   if (typeof window === "undefined") return null;
@@ -48,13 +35,20 @@ export default function Home() {
 
   useEffect(() => {
     const saved = loadFormData();
-    const num = getNextInvoiceNumber();
-    if (saved) {
-      setInvoiceData({ ...saved, invoiceNumber: num });
-    } else {
-      setInvoiceData((prev) => ({ ...prev, invoiceNumber: num }));
-    }
-    setMounted(true);
+    if (saved) setInvoiceData(saved);
+
+    // Fetch current invoice number from MongoDB
+    fetch("/api/invoice-number")
+      .then((r) => r.json())
+      .then(({ invoiceNumber }) => {
+        if (typeof invoiceNumber === "number") {
+          setInvoiceData((prev) => ({ ...prev, invoiceNumber }));
+        }
+      })
+      .catch(() => {
+        // fallback: keep default
+      })
+      .finally(() => setMounted(true));
   }, []);
 
   useEffect(() => {
@@ -101,14 +95,23 @@ export default function Home() {
     const resolvedName = `Mr. ${invoiceData.billTo.trim()} - ${serviceDesc} - Invoice ${invoiceData.invoiceNumber}`;
     pdf.save(`${resolvedName}.pdf`);
 
-    saveInvoiceNumber(invoiceData.invoiceNumber + 1);
+    // Increment counter in MongoDB and update local state with new number
+    fetch("/api/invoice-number", { method: "POST" })
+      .then((r) => r.json())
+      .then(({ invoiceNumber }) => {
+        if (typeof invoiceNumber === "number") {
+          setInvoiceData((prev) => ({ ...prev, invoiceNumber }));
+        }
+      })
+      .catch(() => {
+        // fallback: increment locally
+        setInvoiceData((prev) => ({ ...prev, invoiceNumber: prev.invoiceNumber + 1 }));
+      });
   }, [invoiceData]);
 
   const handleReset = useCallback(() => {
-    const nextNum = getNextInvoiceNumber();
     const fresh: InvoiceData = {
       ...DEFAULT_INVOICE,
-      invoiceNumber: nextNum,
       lineItems: [
         {
           id: crypto.randomUUID(),
@@ -118,7 +121,15 @@ export default function Home() {
         },
       ],
     };
-    setInvoiceData(fresh);
+
+    // Fetch current number from MongoDB for the reset form
+    fetch("/api/invoice-number")
+      .then((r) => r.json())
+      .then(({ invoiceNumber }) => {
+        setInvoiceData({ ...fresh, invoiceNumber: typeof invoiceNumber === "number" ? invoiceNumber : DEFAULT_INVOICE.invoiceNumber });
+      })
+      .catch(() => setInvoiceData(fresh));
+
     if (typeof window !== "undefined") {
       localStorage.removeItem(FORM_DATA_KEY);
     }
