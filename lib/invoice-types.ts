@@ -27,9 +27,10 @@ export const COMPANY_INFO = {
   website: "www.buzzfiling.com",
   email: "hello@buzzfiling.com",
   ordersEmail: "orders.buzzfiling@gmail.com",
-  phones: ["+92 3394882800", "+44 (774) 058-3294", "+1 (983) 983-3227"],
+  filingEmail: "filings@buzzfiling.com",
+  phones: ["+92 3394882800", "+44 (774) 058-3294", "+1 (786) 574-9305"],
   address:
-    "Office No. 503, Plot 67/3, Zulekha Trade Centre, Alamgir Rd, CP & Berar Society CP & Berar CHS, Karachi, 75300",
+    "Office No. 503, Plot 67/3, Zulekha Trade Centre, Alamgir Rd, CP & Berar Society CP & Berar CHS, Karachi, Pakistan",
   bankAccountTitle: "BUZZ FILING",
   bankAccountNumber: "1176314943776",
   iban: "PK22UNIL0109000314943776",

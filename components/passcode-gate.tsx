@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect, KeyboardEvent } from "react";
 
-const CORRECT = "2899";
+const CORRECT = "2668";
 const DIGITS = 4;
 
 export default function PasscodeGate({ children }: { children: React.ReactNode }) {
