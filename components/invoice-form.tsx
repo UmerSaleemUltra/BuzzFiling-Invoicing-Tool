@@ -20,6 +20,7 @@ interface InvoiceFormProps {
   setData: Dispatch<SetStateAction<InvoiceData>>;
   onDownload: () => void;
   onReset: () => void;
+  invoiceNumLoading?: boolean;
 }
 
 export default function InvoiceForm({
@@ -27,6 +28,7 @@ export default function InvoiceForm({
   setData,
   onDownload,
   onReset,
+  invoiceNumLoading = false,
 }: InvoiceFormProps) {
   const updateField = <K extends keyof InvoiceData>(key: K, value: InvoiceData[K]) => {
     setData((prev) => ({ ...prev, [key]: value }));
@@ -94,14 +96,14 @@ export default function InvoiceForm({
 
         <div className="grid grid-cols-2 gap-3">
           <div className="flex flex-col gap-1.5">
-            <Label htmlFor="invoiceNumber" className="text-xs">Number</Label>
-            <Input
-              id="invoiceNumber"
-              type="number"
-              value={data.invoiceNumber}
-              onChange={(e) => updateField("invoiceNumber", parseInt(e.target.value) || 0)}
-              className="field-input h-9"
-            />
+            <Label className="text-xs">Number</Label>
+            <div className="h-9 flex items-center px-4 rounded-full border border-border bg-muted/60 text-xs font-semibold tabular-nums text-foreground">
+              {invoiceNumLoading ? (
+                <span className="text-muted-foreground animate-pulse">Loading…</span>
+              ) : (
+                `#${data.invoiceNumber}`
+              )}
+            </div>
           </div>
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="invoiceDate" className="text-xs">Date</Label>
