@@ -180,17 +180,18 @@ export default function InvoiceForm({
                   className="field-input h-8 text-xs"
                 />
                 <Input
-                  type="number"
-                  min={1}
-                  value={item.qty}
+                  type="text"
+                  inputMode="decimal"
+                  value={item.qty === 0 ? "" : item.qty}
+                  placeholder="1"
                   onChange={(e) => updateLineItem(item.id, "qty", parseFloat(e.target.value) || 0)}
                   className="field-input h-8 text-xs text-center px-1"
                 />
                 <Input
-                  type="number"
-                  min={0}
-                  step={0.01}
-                  value={item.rate}
+                  type="text"
+                  inputMode="decimal"
+                  value={item.rate === 0 ? "" : item.rate}
+                  placeholder="0.00"
                   onChange={(e) => updateLineItem(item.id, "rate", parseFloat(e.target.value) || 0)}
                   className="field-input h-8 text-xs text-center px-1"
                 />
@@ -241,9 +242,8 @@ export default function InvoiceForm({
             <Label htmlFor="discount" className="text-xs">Discount ($)</Label>
             <Input
               id="discount"
-              type="number"
-              min={0}
-              step={0.01}
+              type="text"
+              inputMode="decimal"
               placeholder="0"
               value={data.discount === 0 ? "" : data.discount}
               onChange={(e) => updateField("discount", parseFloat(e.target.value) || 0)}
@@ -255,9 +255,8 @@ export default function InvoiceForm({
             <Label htmlFor="paymentReceived" className="text-xs">Payment Received ($)</Label>
             <Input
               id="paymentReceived"
-              type="number"
-              min={0}
-              step={0.01}
+              type="text"
+              inputMode="decimal"
               placeholder="0"
               value={data.paymentReceived === 0 ? "" : data.paymentReceived}
               onChange={(e) => updateField("paymentReceived", parseFloat(e.target.value) || 0)}
