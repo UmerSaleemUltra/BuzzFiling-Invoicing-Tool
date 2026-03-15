@@ -20,8 +20,6 @@ interface InvoiceFormProps {
   setData: Dispatch<SetStateAction<InvoiceData>>;
   onDownload: () => void;
   onReset: () => void;
-  fileName: string;
-  setFileName: Dispatch<SetStateAction<string>>;
 }
 
 export default function InvoiceForm({
@@ -29,8 +27,6 @@ export default function InvoiceForm({
   setData,
   onDownload,
   onReset,
-  fileName,
-  setFileName,
 }: InvoiceFormProps) {
   const updateField = <K extends keyof InvoiceData>(key: K, value: InvoiceData[K]) => {
     setData((prev) => ({ ...prev, [key]: value }));
@@ -293,21 +289,6 @@ export default function InvoiceForm({
       {/* ── Actions ── */}
       <div className="px-5 py-5 flex flex-col gap-3">
         <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground/60">Export</p>
-
-        {/* File name */}
-        <div className="flex flex-col gap-1.5">
-          <Label htmlFor="fileName" className="text-xs">File Name (optional)</Label>
-          <div className="flex items-center gap-2">
-            <Input
-              id="fileName"
-              placeholder={`Invoice-${data.invoiceNumber}-${data.billTo.replace(/\s+/g, "-") || "Client"}`}
-              value={fileName}
-              onChange={(e) => setFileName(e.target.value)}
-              className="field-input h-9 flex-1"
-            />
-            <span className="text-[10px] text-muted-foreground flex-shrink-0 font-medium">.pdf</span>
-          </div>
-        </div>
 
         <Button
           className="w-full h-10 text-white font-semibold rounded-full cursor-pointer text-xs tracking-wider border-0 transition-opacity hover:opacity-90"
