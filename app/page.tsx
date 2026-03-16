@@ -103,8 +103,7 @@ export default function Home() {
 
     pdf.addImage(imgData, "JPEG", 0, 0, A4_W, A4_H, undefined, "FAST");
 
-    const serviceDesc = invoiceData.lineItems.find((i) => i.description.trim())?.description.trim() ?? "Service";
-    const resolvedName = `${invoiceData.billTo.trim()} - ${serviceDesc} - Invoice ${invoiceData.invoiceNumber}`;
+    const resolvedName = `${invoiceData.billTo.trim()} - ${invoiceData.serviceType} - Invoice ${invoiceData.invoiceNumber}`;
     pdf.save(`${resolvedName}.pdf`);
 
     // Increment counter in MongoDB and update local state with new number
